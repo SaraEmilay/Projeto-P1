@@ -85,5 +85,5 @@ def rodar_jogo(x, y, xz1, yz1, direcao_y, xz2, yz2, direcao_x, xc, yc, velocidad
         pygame.display.update()
 
 rodar_jogo(x, y, xz1, yz1, direcao_y, xz2, yz2, direcao_x, xc, yc, velocidade)
-
+#atualizações
 pygame.quit()
