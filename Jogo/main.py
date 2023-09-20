@@ -1,89 +1,90 @@
 import pygame
 import random
+from classes import Iterador, Jogador, Zumbi, Pizza, Coca_cafe
+
+PRETO = (0,0,0)
 
 pygame.init()
-largura, altura = 600, 400
+LARGURA, ALTURA = 600, 400
 
 #Player
-x = largura // 2  # Inicializa x no centro da tela
-y = altura // 2   # Inicializa y no centro da tela
-velocidade = 10
+jogador = Jogador(LARGURA // 2, ALTURA // 2, 10) #x_inicial, y_inicial, velocidade
 
-#Zumbi 1
-xz1 = 100
-yz1 = 30
-velocidade_z = 10
-direcao_y = 1  # Inicializa a direção vertical para baixo
+#Zumbis
+zumbi1 = Zumbi(100, 30, 10, movimento_y= True) #x_inicial, y_inicial, velocidade, movimento_x = False, movimento_y, direcao_x = 1, direcao_y = 1
+zumbi2 = Zumbi(200, 30, 10, movimento_x = True) #x_inicial, y_inicial, velocidade, movimento_x, movimento_y = False, direcao_x = 1, direcao_y = 1
 
-#Zumbi 2
-xz2 = 100
-yz2 = 30
-velocidade_z = 10
-direcao_x = 1  # Inicializa a direção vertical para baixo
 
-#Coca café
-xc = 50
-yc = 100
+#Pizzas e Coca café
+pizza1 = Pizza(200, 200) #x_inicial, y_inicial, coletada = False
+pizza2 = Pizza(400, 300) #x_inicial, y_inicial, coletada = False
+coca = Coca_cafe(50, 100) #x_inicial, y_inicial, coletada = False
 
-#Define o título da janela
+
+#Define o título da JANELA e estabelece a taxa de quadros por segundo.
 pygame.display.set_caption("O resgate de Marcelinho")
-
-janela = pygame.display.set_mode((largura, altura))
+JANELA = pygame.display.set_mode((LARGURA, ALTURA))
 relogio = pygame.time.Clock()
+FPS = 60
 
-def colisao(xc1, yc1, xc2, yc2):
-    return (xc1 == xc2) and (yc1 == yc2)
+def colisoes():
+    # Colisão de zumbi e jogador
+    for zumbi in Zumbi:
+        if jogador.rect.colliderect(zumbi.rect):
+            jogador.vidas -= 1 
+            jogador.rect.x, jogador.rect.y = LARGURA // 2, ALTURA // 2 #Retorna o jogador a posição predefinida.
+    # Colisão entre pizza e jogador
+    for pizza in Pizza:
+        if jogador.rect.colliderect(pizza.rect) and not pizza.coletada:
+            pizza.coletada = True #Faz a Pizza desaparecer e não poder ser coletada mais vezes
 
-def rodar_jogo(x, y, xz1, yz1, direcao_y, xz2, yz2, direcao_x, xc, yc, velocidade):
+    # Colisão entre coca café e jogador
+    for coca_cafe in Coca_cafe:
+        if jogador.rect.colliderect(coca_cafe.rect) and not coca_cafe.coletada:
+            coca_cafe.coletada = True #Faz a coca_cafe desaparecer e não poder ser coletada mais vezes
+            jogador.velocidade += 10
+# Quando o jogador perde as 3 vidas(a ser debatido), ele regressa a posição inicial(consequência da colisão com zumbi), volta a ter 3 vidas e velocidade 10, os zumbis e coletáveis voltam a seus estados inicais.
+def reiniciar():
+    jogador.vidas = 3
+    jogador.velocidade = 10
+    for zumbi in Zumbi:
+        zumbi.rect.x, zumbi.rect.y = zumbi.x_inicial, zumbi.y_inicial
+    for pizza in Pizza:
+        pizza.coletada = False
+    for coca_cafe in Coca_cafe:
+        coca_cafe.coletada = False
+
+
+def rodar_jogo():
     fim_jogo = False
     while not fim_jogo:
         pygame.time.delay(50)
-
+        relogio.tick(FPS)
+        #Condição de interromper código
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:
                 fim_jogo = True
-
+        # Controla o movimento do jogador, dos Zumbis, testa colisões e avalia se o jogo terminou. Então, redesenha a janela de acordo.
         comandos = pygame.key.get_pressed() 
-        if comandos[pygame.K_UP] and y > 0:
-            y -= velocidade
-        if comandos[pygame.K_DOWN] and y < altura - 20:
-            y += velocidade
-        if comandos[pygame.K_RIGHT] and x < largura - 20:
-            x += velocidade
-        if comandos[pygame.K_LEFT] and x > 0:
-            x -= velocidade
+        jogador.movimento(comandos, LARGURA, ALTURA)
+        for zumbi in Zumbi:
+            zumbi.movimento(LARGURA, ALTURA)
+        colisoes()
+        if jogador.vidas == 0:
+            reiniciar()
         
-        #Colisão entre player e coca-cafe
-        if colisao(x, y, xc, yc):
-            velocidade += 10
-            xc = -1000 #uma tentativa de fazer a coca-café sumir após a colisão
-            yc = -1000
-
-
-        #Colisão entre player e zumbis
-        if colisao(x, y, xz1, yz1) or colisao(x, y, xz2, yz2):
-            x, y = largura // 2, altura // 2
-
-        # Movimentação zumbi 1 (vertical)
-        yz1 += velocidade_z * direcao_y
-        if yz1 <= 0 or yz1 >= altura - 20:
-            direcao_y *= -1
-
-        # Movimentação zumbi 2 (horizontal)
-        xz2 += velocidade_z * direcao_x
-        if xz2 <= 0 or xz2 >= largura - 20:
-            direcao_x *= -1
-
-
-        janela.fill((0, 0, 0))
-        player = pygame.draw.rect(janela, (0, 255, 0), (x, y, 20, 20))  #janela, cor, tamanho
-        zumbi1 = pygame.draw.rect(janela, (255, 255, 255), (xz1, yz1, 20, 20)) #quadrado branco
-        zumbi2 = pygame.draw.rect(janela, (255, 255, 255), (xz2, yz2, 20, 20)) #quadrado branco
-        coca_cafe = pygame.draw.rect(janela, (139, 69, 19), (xc, yc, 10, 10)) #retangulo marrom
-        pygame.draw.circle(janela, (255, 255, 0), (200, 200), 7) #circulo amarelo
-        pygame.draw.circle(janela, (255, 255, 0), (400, 300), 7) #circulo amarelo
+        JANELA.fill(PRETO)
+        pygame.draw.rect(JANELA, Jogador.cor, jogador.rect)  #JANELA, cor, tamanho
+        for zumbi in Zumbi:
+            pygame.draw.rect(JANELA, Zumbi.cor, zumbi.rect) #quadrado verde-zumbi
+        for coca_cafe in Coca_cafe:
+            if not coca_cafe.coletada:
+                pygame.draw.rect(JANELA, Coca_cafe.cor, coca_cafe.rect) #retangulo marrom
+        for pizza in Pizza:
+            if not pizza.coletada:
+                pygame.draw.rect(JANELA, Pizza.cor, pizza.rect) #retângulo pizza
         pygame.display.update()
 
-rodar_jogo(x, y, xz1, yz1, direcao_y, xz2, yz2, direcao_x, xc, yc, velocidade)
-#atualizações
+rodar_jogo()
+
 pygame.quit()
