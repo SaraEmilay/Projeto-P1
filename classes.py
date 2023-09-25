@@ -9,7 +9,7 @@ class Iterador(type):
 class Jogador:
     cor = (255, 255, 255)
     def __init__(self, x_inicial, y_inicial, velocidade, vidas = 3):
-        self.rect = pygame.Rect(x_inicial,y_inicial, 32, 32)    
+        self.rect = pygame.Rect(x_inicial,y_inicial, 25, 25)    
         self.velocidade = velocidade
         self.vidas = vidas
 
@@ -42,7 +42,7 @@ class Jogador:
 #Classe dos Zumbis. É iterável, e possui como método o movimento.
 class Zumbi(metaclass = Iterador):
     _registro = []
-    cor = (105, 131, 98)
+    cor = (1, 217, 65)
 
     #As variáveis x e y iniciais são usadas para criação do retângulo e como coordenadas padrão para onde os zumbis voltarão dps do fim de jogo. Os movimentos são booleanas que avaliam se deve se mover nessa direção(temporário) e as direção(sentido seria mais apropriado?) definem se se movem para um lado ou para o outro. 
     def __init__(self, x_inicial, y_inicial, velocidade, movimento_x = False, movimento_y = False, direcao_x = 1, direcao_y = 1):
@@ -62,10 +62,25 @@ class Zumbi(metaclass = Iterador):
             self.rect.x += self.direcao_x * self.velocidade
             if self.rect.x <= 32 or self.rect.x >= LARGURA - 64:
                 self.direcao_x *= -1
+            else:
+                self.colisao(Parede.paredes)    
         if self.mov_y:
             self.rect.y += self.direcao_y * self.velocidade
             if self.rect.y <= 32 or self.rect.y >= ALTURA - 64:
                 self.direcao_y *= -1
+            else:
+                self.colisao(Parede.paredes)        
+
+    def colisao(self,paredes):
+        for parede in paredes:
+            if self.rect.colliderect(parede.rect):
+                if self.mov_x:
+                    self.direcao_x *= -1
+                    
+                if self.mov_y:
+                    self.direcao_y *= -1
+
+
 #Classe das Pizzas, Iterável. self.coletada serve para garantir que os efeitos de coleta e a impressão só ocorram se a pizza não tiver sido coletada.
 class Pizza(metaclass = Iterador):
     _registro = []
@@ -86,25 +101,27 @@ class Coca_cafe(metaclass = Iterador):
 
 class Parede(object):
     paredes=[]
+    cor = (100, 217, 65)
     def __init__(self,posicao):
         Parede.paredes.append(self)
         self.rect=pygame.Rect(posicao[0],posicao[1],32,32)
 mapa=[
     'PPPPPPPPPPPPPPPPPPPP',
-    'P------------------P',
-    'P-----PPPP---------P',
-    'P--------P---------P',
-    'P------------------P',
-    'P------------------P',
-    'P-----------PP-----P',
-    'P------------P-----P',
-    'P------------P-----P',
-    'P------------------P',
-    'P------------------P',
-    'P------------------P',
-    'P------------------P',
-    'P------------------P',
+    'P--P-P-------------P',
+    'P-PP-PP-PPPP-PP-PP-P',
+    'P------------PPPPP-P',
+    'P---P-PPPPPP-------P',
+    'P-PPP----P-P-PPP---P',
+    'P---P-PPPP-P-P-PPP-P',
+    'P-PPP--------P-PPP-P',
+    'P---P-P-PPP--------P',
+    'P-PPP-P---P-PPP-P-PP',
+    'P---P-P-PPP-P-P-P-PP',
+    'P-PPP-------P-PPP-PP',
+    'P--P--P-P-P-P------P',
+    'P--P-PP---P---P--P--',
     'PPPPPPPPPPPPPPPPPPPP'
+     
 ]
 
 x=y=0
