@@ -45,26 +45,35 @@ relogio = pygame.time.Clock()
 FPS = 60
 
 
-def colisoes(placar):
+def colisoes(pizzas_possuidas):
     # Colisão de zumbi e jogador
     for zumbi in Zumbi:
-        if jogador.rect.colliderect(zumbi.rect):
-            jogador.vidas -= 1
-            jogador.velocidade = 10
-            jogador.rect.x, jogador.rect.y = jogador_coord_init[0], jogador_coord_init[1]  # Retorna o jogador a posição predefinida.
+        if jogador.rect.colliderect(zumbi.rect) and not jogador.invulnerabilidade:
+            jogador.invulnerabilidade = True
+            Jogador.cor = (150, 150, 150)
+            PERDER_INVULNERABILIDADE = pygame.USEREVENT + 0
+            pygame.time.set_timer(PERDER_INVULNERABILIDADE, 2000, 1)
+            if pizzas_possuidas > 0:
+                pizzas_possuidas -= 1
+            else:
+                jogador.vidas -= 1
+                for zumbi in Zumbi:
+                    zumbi.velocidade = zumbi.velocidade_base 
+                jogador.rect.x, jogador.rect.y = jogador_coord_init[0], jogador_coord_init[1]  # Retorna o jogador a posição predefinida.
     # Colisão entre pizza e jogador
     for pizza in Pizza:
         if jogador.rect.colliderect(pizza.rect) and not pizza.coletada:
             pizza.coletada = True  # Faz a Pizza desaparecer e não poder ser coletada mais vezes
-            if jogador.vidas<=2:
-                jogador.vidas += 1
-            placar += 1
+            pizzas_possuidas += 1
     # Colisão entre coca café e jogador
     for coca_cafe in Coca_cafe:
         if jogador.rect.colliderect(coca_cafe.rect) and not coca_cafe.coletada:
             coca_cafe.coletada = True  # Faz a coca_cafe desaparecer e não poder ser coletada mais vezes
-            jogador.velocidade += 10
-    return placar
+            for zumbi in Zumbi:
+                zumbi.velocidade *= 1/2
+            FIM_DO_BONUS = pygame.USEREVENT + 1
+            pygame.time.set_timer(FIM_DO_BONUS, 10000, 1)
+    return pizzas_possuidas
 
 
 # Quando o jogador perde as 3 vidas(a ser debatido), ele regressa a posição inicial(consequência da colisão com zumbi), volta a ter 3 vidas e velocidade 10, os zumbis e coletáveis voltam a seus estados inicais.
@@ -82,10 +91,10 @@ def reiniciar():
 
 def rodar_jogo():
     fim_jogo = False
-    placar = 0
+    pizzas_possuidas = 0
     while not fim_jogo:
         fonte_contador = pygame.font.Font(None, 20)
-        texto_contador = fonte_contador.render("Pizza:" + str(placar) + "       Vidas:" + str(jogador.vidas), True,
+        texto_contador = fonte_contador.render("Pizza:" + str(pizzas_possuidas) + "       Vidas:" + str(jogador.vidas), True,
                                                BRANCO)
         pygame.time.delay(50)
         relogio.tick(FPS)
@@ -93,14 +102,20 @@ def rodar_jogo():
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:
                 fim_jogo = True
+            if evento.type == pygame.USEREVENT + 0:
+                jogador.invulnerabilidade = False
+                Jogador.cor = (255, 255, 255)
+            if evento.type == pygame.USEREVENT + 1:
+                for zumbi in Zumbi:
+                    zumbi.velocidade = zumbi.velocidade_base 
         # Controla o movimento do jogador, dos Zumbis, testa colisões e avalia se o jogo terminou. Então, redesenha a janela de acordo.
         comandos = pygame.key.get_pressed()
         jogador.movimento(comandos, LARGURA, ALTURA)
         for zumbi in Zumbi:
             zumbi.movimento(LARGURA, ALTURA)
-        placar = colisoes(placar)
+        pizzas_possuidas = colisoes(pizzas_possuidas)
         if jogador.vidas == 0:
-            placar = reiniciar()
+            pizzas_possuidas = reiniciar()
 
         JANELA.fill(PRETO)
         for parede in Parede.paredes:

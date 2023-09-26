@@ -12,7 +12,7 @@ class Jogador:
         self.rect = pygame.Rect(coordenadas[0],coordenadas[1], 23, 23)    
         self.velocidade = velocidade
         self.vidas = vidas
-
+        self.invulnerabilidade = False
     def movimento(self, comandos, LARGURA, ALTURA):        
         self.deslocamento_x = 0
         self.deslocamento_y = 0
@@ -59,6 +59,7 @@ class Zumbi(metaclass = Iterador):
         self.mov_y = movimento_y
         self.direcao_x = direcao_x
         self.direcao_y = direcao_y
+        self.velocidade_base = velocidade
         self.velocidade = velocidade
 
     #Antes de movimentar, checa se a instância possui movimento na determinada direção. No futuro será substituído por movimento em rotas.    
