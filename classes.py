@@ -1,11 +1,6 @@
 import pygame
 
-#Metaclasse que irá pertmitir iterações sobre as outras classes(Zumbi, Pizza e Coca_cafe)
-class Iterador(type):
-    def __iter__(cls):
-        return iter(cls._registro)
-
-#Classe do Jogador, com único método movimento.
+#Classe do Jogador, com único método movimento e movimento linear.
 class Jogador:
     cor = (255, 255, 255)
     def __init__(self, coordenadas, velocidade, vidas = 3):
@@ -13,6 +8,8 @@ class Jogador:
         self.velocidade = velocidade
         self.vidas = vidas
         self.invulnerabilidade = False
+
+    # Primeiramente, avalia qual a direção do movimento em x e em y. Então, chama um método que lida com o movimento unidirecional duas vezes: Uma apenas para x e uma apenas para y.    
     def movimento(self, comandos, LARGURA, ALTURA):        
         self.deslocamento_x = 0
         self.deslocamento_y = 0
@@ -30,6 +27,7 @@ class Jogador:
         if self.deslocamento_y != 0:
             self.movimento_linear(0, self.deslocamento_y)
 
+    # Método que move em apenas uma direção enquanto checa colisão com as paredes do mapa. 
     def movimento_linear(self, desloc_x, desloc_y):
         self.rect.x += desloc_x
         self.rect.y += desloc_y
@@ -44,11 +42,9 @@ class Jogador:
                 elif desloc_y < 0:  # Movendo para cima
                     self.rect.top = parede.rect.bottom
 
-#Classe dos Zumbis. É iterável, e possui como método o movimento.
-class Zumbi(metaclass = Iterador):
-    _registro = []
+#Classe dos Zumbis. Possui como método o movimento.
+class Zumbi():
     cor = (1, 217, 65)
-
     #As variáveis x e y iniciais são usadas para criação do retângulo e como coordenadas padrão para onde os zumbis voltarão dps do fim de jogo. Os movimentos são booleanas que avaliam se deve se mover nessa direção(temporário) e as direção(sentido seria mais apropriado?) definem se se movem para um lado ou para o outro. 
     def __init__(self, x_inicial, y_inicial, velocidade, movimento_x = False, movimento_y = False, direcao_x = 1, direcao_y = 1):
         self._registro.append(self)
@@ -87,9 +83,8 @@ class Zumbi(metaclass = Iterador):
                     self.direcao_y *= -1
 
 
-#Classe das Pizzas, Iterável. self.coletada serve para garantir que os efeitos de coleta e a impressão só ocorram se a pizza não tiver sido coletada.
-class Pizza(metaclass = Iterador):
-    _registro = []
+#Classe das Pizzas, self.coletada serve para garantir que os efeitos de coleta e a impressão só ocorram se a pizza não tiver sido coletada.
+class Pizza():
     cor = (212, 155, 23)
     def __init__(self, x_inicial, y_inicial, coletada = False):
         self._registro.append(self)
@@ -97,14 +92,14 @@ class Pizza(metaclass = Iterador):
         self.coletada = coletada
 
 #Classe das Coca_cafe, idêntica a pizza.
-class Coca_cafe(metaclass = Iterador):
-    _registro = []
+class Coca_cafe():
     cor = (111, 78, 55)
     def __init__(self, x_inicial, y_inicial, coletada = False):
         self._registro.append(self)
         self.rect = pygame.Rect(x_inicial, y_inicial, 10, 10)
         self.coletada = coletada
 
+#Classe das paredes, cria quadrados de parede onde apropriado, seguindo a grid. Quando formos criar as fases, cada fase irá chamar essa classe e produzir sua própria lista [] iterável, fora do arquivo de classes.
 class Parede(object):
     paredes=[]
     cor = (100, 217, 65)
