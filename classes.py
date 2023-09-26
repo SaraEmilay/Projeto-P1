@@ -8,37 +8,42 @@ class Iterador(type):
 #Classe do Jogador, com único método movimento.
 class Jogador:
     cor = (255, 255, 255)
-    def __init__(self, x_inicial, y_inicial, velocidade, vidas = 3):
-        self.rect = pygame.Rect(x_inicial,y_inicial, 25, 25)    
+    def __init__(self, coordenadas, velocidade, vidas = 3):
+        self.rect = pygame.Rect(coordenadas[0],coordenadas[1], 23, 23)    
         self.velocidade = velocidade
         self.vidas = vidas
 
     def movimento(self, comandos, LARGURA, ALTURA):        
-        self.dx = 0
-        self.dy = 0
+        self.deslocamento_x = 0
+        self.deslocamento_y = 0
         if comandos[pygame.K_UP] and self.rect.y > 32:
-            self.dy = -self.velocidade
+            self.deslocamento_y = -self.velocidade
         if comandos[pygame.K_DOWN] and self.rect.y < ALTURA - 32:
-            self.dy = self.velocidade
+            self.deslocamento_y = self.velocidade
         if comandos[pygame.K_RIGHT] and self.rect.x < LARGURA - 32:
-            self.dx = self.velocidade
+            self.deslocamento_x = self.velocidade
         if comandos[pygame.K_LEFT] and self.rect.x > 32:
-            self.dx = -self.velocidade
-        self.rect.x += self.dx
-        self.rect.y += self.dy
-        self.colisao(Parede.paredes)
+            self.deslocamento_x = -self.velocidade
+        
+        if self.deslocamento_x != 0:
+            self.movimento_linear(self.deslocamento_x, 0)
+        if self.deslocamento_y != 0:
+            self.movimento_linear(0, self.deslocamento_y)
 
-    def colisao(self,paredes):
-        for parede in paredes:
+    def movimento_linear(self, desloc_x, desloc_y):
+        self.rect.x += desloc_x
+        self.rect.y += desloc_y
+        for parede in Parede.paredes:
             if self.rect.colliderect(parede.rect):
-                if self.dx > 0:  # Movendo para a direita
+                if desloc_x > 0:  # Movendo para a direita
                     self.rect.right = parede.rect.left
-                elif self.dx < 0:  # Movendo para a esquerda
+                elif desloc_x < 0:  # Movendo para a esquerda
                     self.rect.left = parede.rect.right
-                if self.dy > 0:  # Movendo para baixo
+                if desloc_y > 0:  # Movendo para baixo
                     self.rect.bottom = parede.rect.top
-                elif self.dy < 0:  # Movendo para cima
+                elif desloc_y < 0:  # Movendo para cima
                     self.rect.top = parede.rect.bottom
+
 #Classe dos Zumbis. É iterável, e possui como método o movimento.
 class Zumbi(metaclass = Iterador):
     _registro = []

@@ -10,7 +10,8 @@ pygame.init()
 LARGURA, ALTURA = 640, 480
 
 # Player
-jogador = Jogador(64, 416, 10)  # x_inicial, y_inicial, velocidade
+jogador_coord_init = [64, 416]  #x_inicial, y_inicial,
+jogador = Jogador(jogador_coord_init, 10)  # coordenads e velocidade
 
 # Zumbis
 zumbi_1_1 = Zumbi(32, 64, 10,
@@ -50,7 +51,7 @@ def colisoes(placar):
         if jogador.rect.colliderect(zumbi.rect):
             jogador.vidas -= 1
             jogador.velocidade = 10
-            jogador.rect.x, jogador.rect.y = 64, 416  # Retorna o jogador a posição predefinida.
+            jogador.rect.x, jogador.rect.y = jogador_coord_init[0], jogador_coord_init[1]  # Retorna o jogador a posição predefinida.
     # Colisão entre pizza e jogador
     for pizza in Pizza:
         if jogador.rect.colliderect(pizza.rect) and not pizza.coletada:
