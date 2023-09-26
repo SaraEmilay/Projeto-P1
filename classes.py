@@ -106,6 +106,26 @@ class Parede(object):
     def __init__(self,posicao):
         Parede.paredes.append(self)
         self.rect=pygame.Rect(posicao[0],posicao[1],32,32)
+
+
+#Classe do Crachá, igual a pizza.
+class Cracha ():
+    cor = (239, 184, 16)
+    def __init__(self, x_inicial, y_inicial, coletada = False):
+        self._registro.append(self)
+        self.rect = pygame.Rect(x_inicial, y_inicial, 12, 12)
+        self.coletada = coletada
+
+#Classe da Porta, ainda faltam informações quanto ao tamanho e tals
+class Porta:
+    def __init__(self, x, y, sala_destino):
+        self.x = x
+        self.y = y
+        self.sala_destino = sala_destino
+        # Verificando colisões com portas/ ainda não coloquei os tamanhos pois preciso de mais informações
+    for porta in sala_atual.portas:
+        if jogador.rect.colliderect(porta.x, porta.y, largura_da_porta, altura_da_porta):
+            sala_atual = porta.sala_destino
 mapa=[
     'PPPPPPPPPPPPPPPPPPPP',
     'P--P-P-------------P',
