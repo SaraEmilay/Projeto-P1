@@ -1,28 +1,20 @@
 from classes import Zumbi,Jogador,Pizza,Coca_cafe
 from main import *
-#zumbies/pizzas/coca/player
+
+def cria_Paredes(grid):
+        Paredes = []
+        x=y=0
+        for linha in grid:
+            for coluna in linha:
+                if coluna =='P':
+                    Paredes.append(Parede((x,y)))
+                x+=32
+            y+=32
+            x=0
+        return Paredes
 
 
-zumbi_1_1 = Zumbi(100, 30, 10,
-               movimento_y=True)
-zumbi_1_2 = Zumbi(300, 30, 10,
-               movimento_y=True)
-zumbi_1_3 = Zumbi(400, 30, 10,
-               movimento_y=True)
-
-
-
-jogador_1 = Jogador(640 // 2, 480 // 2, 10)  # x_inicial, y_inicial, velocidade
-
- 
-# Pizzas e Coca café
-pizza_1_1 = Pizza(400, 300)  # x_inicial, y_inicial, coletada = False
-pizza_1_2 = Pizza(400, 100)  # x_inicial, y_inicial, coletada = False
-coca_1 = Coca_cafe(50, 100)  # x_inicial, y_inicial, coletada = False
-
-leveit=[[zumbi_1_1,zumbi_1_2,zumbi_1_3],[pizza_1_1,pizza_1_2],[coca_1],[jogador_1]]
-
-print(zumbi_1_1.cor)
+Levels = []
 
 grid_1=[
     'PPPPPPPPPPPPPPPPPPPP',
@@ -39,8 +31,20 @@ grid_1=[
     'P-P---P------P---P-P',
     'P-PPPPPPP--PPPPPPP-P',
     'P------------------P',
-    'PPPPPPPPPPPPPPPPPPPP'  
+    'PPPPPPPPPPPPPPPPPPPP'
 ]
+porta1 = Porta(18*32,32*1)
+Paredes1 = cria_Paredes(grid_1)
+jogador_coord_init1 = [32*1, 13*32]  #x_inicial, y_inicial,
+jogador1 = Jogador(jogador_coord_init1, 10, porta1, Paredes1)  # coordenadas e velocidade
+
+#A ordem dos zumbis vão de cima p/ baixo no mapa 1 - o Segundo é o zumbi no canto
+Zumbis1 = [Zumbi(32, 32, 10, Paredes1, movimento_x=True),Zumbi(18*32, 13*32, 10, Paredes1, movimento_y=True),Zumbi(32*6, 9*32, 10, Paredes1, movimento_y=True,direcao_y = -1),Zumbi(14*32, 5*32, 10, Paredes1, movimento_y=True),Zumbi(11*32, 6*32, 10, Paredes1, movimento_y=True),Zumbi(12*32, 11*32, 10, Paredes1, movimento_x=True,direcao_x=-1)]
+
+Pizzas1 = [Pizza(9*32+8, 3*32+8,),Pizza(5*32+8, 5*32+8),Pizza(12*32+8, 10*32+8)]
+cracha1 = Cracha(10*32+8, 6*32+8)
+Mapa1 = [grid_1, Paredes1, porta1, jogador1, Zumbis1, Pizzas1, cracha1]
+Levels.append(Mapa1)
 
 grid_2=[
     'PPPPPPPPPPPPPPPPPPPP',
@@ -57,8 +61,9 @@ grid_2=[
     'P--PP--PP--PP--PP--P',
     'P--PP--PP--PP--PP--P',
     'P------------------P',
-    'PPPPPPPPPPPPPPPPPPPP'  
+    'PPPPPPPPPPPPPPPPPPPP'
 ]
+
 
 grid_3=[
     'PPPPPPPPPPPPPPPPPPPP',
@@ -75,8 +80,9 @@ grid_3=[
     'P------P---------P-P',
     'P------PPPPPPPPPPP-P',
     'P------------------P',
-    'PPPPPPPPPPPPPPPPPPPP'  
+    'PPPPPPPPPPPPPPPPPPPP'
 ]
+
 
 #Esse aqui é o de Ismael
 grid_4=[
@@ -96,6 +102,16 @@ grid_4=[
     'P--P-PP---P---P--P--',
     'PPPPPPPPPPPPPPPPPPPP'
 ]
+porta4 = Porta(608,416)
+Paredes4 = cria_Paredes(grid_4)
+jogador_coord_init4 = [64, 416]  #x_inicial, y_inicial,
+jogador4 = Jogador(jogador_coord_init4, 10, porta4, Paredes4)  # coordenadas e velocidade
+Zumbis4 = [Zumbi(32, 64, 10, Paredes4, movimento_y=True),Zumbi(200, 32, 10, Paredes4, movimento_x=True),Zumbi(32, 400, 10, Paredes4, movimento_y=True,direcao_y = -1),Zumbi(224, 352, 10, Paredes4, movimento_x=True),Zumbi(384, 224, 10, Paredes4, movimento_y=True),Zumbi(160, 224, 10, Paredes4, movimento_y=True),Zumbi(512, 256, 10, Paredes4, movimento_x=True),Zumbi(512, 384, 10, Paredes4, movimento_x=True),Zumbi(544, 128, 10, Paredes4, movimento_x=True)]
+Pizzas4 = [Pizza(480+8, 64+8),Pizza(320+8, 160+8),Pizza(128+8, 416+8)]
+Cocas4 = [Coca_cafe(288+8, 288+8)]
+cracha4 = Cracha(192+8, 32+8)
+Mapa4 = [Paredes4, porta4, jogador4, Zumbis4, Pizzas4, Cocas4, cracha4]
+Levels.append(Mapa4)
 
 #Tá vazio pq não pensei em nada bom ainda
 grid_5=[
@@ -113,5 +129,22 @@ grid_5=[
     'P------------------P',
     'P------------------P',
     'P------------------P',
-    'PPPPPPPPPPPPPPPPPPPP'  
+    'PPPPPPPPPPPPPPPPPPPP'
 ]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
