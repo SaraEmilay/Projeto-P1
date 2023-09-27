@@ -37,7 +37,12 @@ jogador_coord_init1 = [1*32, 13*32]  #x_inicial, y_inicial,
 jogador1 = Jogador(jogador_coord_init1, 10, porta1, Paredes1)  # coordenadas e velocidade
 
 #A ordem dos zumbis vão de cima p/ baixo no mapa 1 - o Segundo é o zumbi no canto
-Zumbis1 = [Zumbi(32, 32, 10, Paredes1, movimento_x=True),Zumbi(18*32, 12*32, 10, Paredes1, movimento_y=True),Zumbi(32*6, 9*32, 10, Paredes1, movimento_y=True,direcao_y = -1),Zumbi(14*32, 5*32, 10, Paredes1, movimento_y=True),Zumbi(11*32, 6*32, 10, Paredes1, movimento_y=True),Zumbi(12*32, 11*32, 10, Paredes1, movimento_x=True,direcao_x=-1)]
+Zumbis1 = [Zumbi(32, 32, 10, Paredes1, movimento_x=True),
+           Zumbi(18*32,12*32, 10, Paredes1, movimento_y=True),
+           Zumbi(32*6, 9*32, 10, Paredes1, movimento_y=True,direcao_y = -1),
+           Zumbi(14*32, 5*32, 10, Paredes1, movimento_y=True),
+           Zumbi(11*32, 6*32, 10, Paredes1, movimento_y=True),
+           Zumbi(12*32, 11*32, 10, Paredes1, movimento_x=True,direcao_x=-1)]
 Pizzas1 = [Pizza(9*32+8, 3*32+8,),Pizza(5*32+8, 5*32+8),Pizza(12*32+8, 10*32+8)]
 Cocas1 = []
 cracha1 = Cracha(10*32+8, 6*32+8)
@@ -66,7 +71,22 @@ porta2 = Porta(11*32,6*32)
 Paredes2 = cria_Paredes(grid_2)
 jogador_coord_init2 = [18*32, 12*32]  #x_inicial, y_inicial,
 jogador2 = Jogador(jogador_coord_init2, 10, porta2, Paredes2)  # coordenadas e velocidade
-Zumbis2 = [Zumbi(5*32,13*32, 10, Paredes2, movimento_y = True, direcao_y= -1), Zumbi(6*32, 1*32, 10, Paredes2, movimento_y = True),Zumbi(13*32,13*32, 10, Paredes2, movimento_y = True, direcao_y= -1), Zumbi(14*32, 1*32, 10, Paredes2, movimento_y = True), Zumbi(2*32, 1*32, 10, Paredes2, movimento_y = True),Zumbi(2*32, 6*32, 10, Paredes2, movimento_y = True),Zumbi(2*32, 11*32, 10, Paredes2, movimento_y = True),Zumbi(17*32, 5*32, 10, Paredes2, movimento_y = True, direcao_y=-1),Zumbi(17*32, 9*32, 10, Paredes2, movimento_y = True, direcao_y=-1), Zumbi(17*32, 13*32, 10, Paredes2, movimento_y = True, direcao_y=-1), Zumbi(1*32, 13*32, 10, Paredes2, movimento_x = True),Zumbi(8*32, 13*32, 10, Paredes2, movimento_x = True), Zumbi(14*32, 13*32, 10, Paredes2, movimento_x = True), Zumbi(17*32, 1*32, 10, Paredes2, movimento_x = True, direcao_x = -1),Zumbi(10*32, 1*32, 10, Paredes2, movimento_x = True, direcao_x = -1), Zumbi(3*32, 1*32, 10, Paredes2, movimento_x = True, direcao_x = -1)]
+Zumbis2 = [Zumbi(5*32,13*32, 10, Paredes2, movimento_y = True, direcao_y= -1),
+           Zumbi(6*32, 1*32, 10, Paredes2, movimento_y = True),
+           Zumbi(13*32,13*32, 10, Paredes2, movimento_y = True, direcao_y= -1),
+           Zumbi(14*32, 1*32, 10, Paredes2, movimento_y = True),
+           Zumbi(2*32, 1*32, 10, Paredes2, movimento_y = True),
+           Zumbi(2*32, 6*32, 10, Paredes2, movimento_y = True),
+           Zumbi(2*32, 11*32, 10, Paredes2, movimento_y = True),
+           Zumbi(17*32, 5*32, 10, Paredes2, movimento_y = True, direcao_y=-1),
+           Zumbi(17*32, 9*32, 10, Paredes2, movimento_y = True, direcao_y=-1),
+           Zumbi(17*32, 13*32, 10, Paredes2, movimento_y = True, direcao_y=-1),
+           Zumbi(1*32, 13*32, 10, Paredes2, movimento_x = True),
+           Zumbi(8*32, 13*32, 10, Paredes2, movimento_x = True),
+           Zumbi(14*32, 13*32, 10, Paredes2, movimento_x = True),
+           Zumbi(17*32, 1*32, 10, Paredes2, movimento_x = True, direcao_x = -1),
+           Zumbi(10*32, 1*32, 10, Paredes2, movimento_x = True, direcao_x = -1),
+           Zumbi(3*32, 1*32, 10, Paredes2, movimento_x = True, direcao_x = -1)]
 Pizzas2 = [Pizza(5*32+8, 2*32+8),Pizza(15*32+8, 4*32+8),Pizza(10*32+8, 10*32+8)]
 Cocas2 = []
 cracha2 = Cracha(4*32+8, 7*32+8)
@@ -95,7 +115,14 @@ porta3 = Porta(18*32,1*32)
 Paredes3 = cria_Paredes(grid_3)
 jogador_coord_init3 = [18*32, 13*32]  #x_inicial, y_inicial,
 jogador3 = Jogador(jogador_coord_init3, 10, porta3, Paredes3)  # coordenadas e velocidade
-Zumbis3 = [Zumbi(3*32, 12*32, 10, Paredes3, movimento_x=True,direcao_x = -1),Zumbi(10*32, 4*32, 10, Paredes3, movimento_y=True,direcao_y = -1),Zumbi(11*32, 6*32, 10, Paredes3, movimento_x=True,direcao_y = 1),Zumbi(16*32, 7*32, 10, Paredes3, movimento_y=True,direcao_y = 1),Zumbi(2*32, 13*32, 10, Paredes3, movimento_x=True,direcao_x = -1),Zumbi(3*32, 16*32, 10, Paredes3, movimento_x=True,direcao_x = 1),Zumbi(4*32, 13*32, 10, Paredes3, movimento_x=True,direcao_x = -1),Zumbi(5*32, 16*32, 10, Paredes3, movimento_x=True,direcao_x = 1),]
+Zumbis3 = [Zumbi(3*32, 12*32, 10, Paredes3, movimento_x=True,direcao_x = -1),
+           Zumbi(10*32, 4*32, 10, Paredes3, movimento_y=True,direcao_y = -1),
+           Zumbi(11*32, 6*32, 10, Paredes3, movimento_x=True,direcao_y = 1),
+           Zumbi(16*32, 7*32, 10, Paredes3, movimento_y=True,direcao_y = 1),
+           Zumbi(2*32, 13*32, 10, Paredes3, movimento_x=True,direcao_x = -1),
+           Zumbi(3*32, 16*32, 10, Paredes3, movimento_x=True,direcao_x = 1),
+           Zumbi(4*32, 13*32, 10, Paredes3, movimento_x=True,direcao_x = -1),
+           Zumbi(5*32, 16*32, 10, Paredes3, movimento_x=True,direcao_x = 1),]
 Pizzas3 = [Pizza(2*32+8, 1*32+8),Pizza(7*32+8, 5*32+8)]
 Cocas3 = [Coca_cafe(10*32+8, 11*32+8)]
 Cracha3 = Cracha(5*32+8, 7*32+8)
