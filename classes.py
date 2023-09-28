@@ -5,7 +5,7 @@ pygame.init()
 class Jogador:
     cor = (255, 255, 255)
     def __init__(self, coordenadas, velocidade, saida, Paredes, vidas = 3):
-        self.rect = pygame.Rect(coordenadas[0],coordenadas[1], 23, 23)   
+        self.rect = pygame.Rect(*coordenadas, 23, 23)   
         self.Paredes = Paredes
         self.x_inicial = coordenadas[0]
         self.y_inicial = coordenadas[1] 
