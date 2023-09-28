@@ -173,4 +173,3 @@ class Botao:
         else:
             self.cor_botao=0,200,49
         return self.click
-    
