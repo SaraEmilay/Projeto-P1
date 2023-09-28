@@ -1,9 +1,12 @@
 from classes import*
 
-def gera_mapas(grid, porta_arg, jogador_arg, zumbis_arg, pizzas_arg, cocas_arg, cracha_arg):
+marcelino=Marcelinho(1*32,1*32)
+
+
+def gera_mapas(grid, porta_arg, jogador_arg, zumbis_arg, pizzas_arg, cocas_arg, cracha_arg,marcelin):
     paredes = cria_paredes(grid)
     porta = Porta(*porta_arg)
-    jogador = Jogador(*jogador_arg, porta, paredes)
+    jogador = Jogador(*jogador_arg, porta, paredes,marcelin)
     zumbis = []
     for zumbi_arg in zumbis_arg:
         zumbis.append(Zumbi(*zumbi_arg, paredes))
@@ -61,7 +64,7 @@ zumbis_1 = ((32, 32, True, False, 1, 1),
 pizzas_1 = [(9*32+8, 3*32+8,),(5*32+8, 5*32+8),(12*32+8, 10*32+8)]
 cocas_1 = []
 cracha_1 = (10*32+8, 6*32+8)
-mapa_1 = (grid_1, porta_1, jogador_1, zumbis_1, pizzas_1, cocas_1, cracha_1)
+mapa_1 = (grid_1, porta_1, jogador_1, zumbis_1, pizzas_1, cocas_1, cracha_1,marcelino)
 
 
 grid_2=[
@@ -104,7 +107,7 @@ zumbis_2 = [(5*32,13*32, False, True, 1, -1),
 pizzas_2 = [(5*32+8, 2*32+8),(15*32+8, 4*32+8),(10*32+8, 10*32+8)]
 cocas_2 = []
 cracha_2 = (4*32+8, 7*32+8)
-mapa_2 = (grid_2, porta_2, jogador_2, zumbis_2, pizzas_2, cocas_2,cracha_2)
+mapa_2 = (grid_2, porta_2, jogador_2, zumbis_2, pizzas_2, cocas_2,cracha_2,marcelino)
 
 
 grid_3=[
@@ -126,20 +129,19 @@ grid_3=[
 ]
 
 porta_3 = (18*32,1*32)
-jogador_coord_init_3 = [18*32, 13*32]  #x_inicial, y_inicial,
+jogador_coord_init_3 = [18*32, 4*32]  #x_inicial, y_inicial,
 jogador_3 = (jogador_coord_init_3, 10)  # coordenadas e velocidade
 zumbis_3 = [(3*32, 12*32, True, False, -1, 1),
            (10*32, 4*32, False, True, 1, -1),
            (11*32, 6*32, True, False, 1, 1),
            (16*32, 7*32, False, True, 1, 1),
-           (2*32, 13*32, True, False, -1, 1),
            (3*32, 16*32, True, False, 1, 1),
            (4*32, 13*32, True, False, -1, 1),
            (5*32, 16*32, True, False, 1, 1),]
 pizzas_3 = [(2*32+8, 1*32+8),(7*32+8, 5*32+8)]
 cocas_3 = [(10*32+8, 11*32+8)]
 cracha_3 = (5*32+8, 7*32+8)
-mapa_3 = (grid_3, porta_3, jogador_3, zumbis_3, pizzas_3, cocas_3, cracha_3)
+mapa_3 = (grid_3, porta_3, jogador_3, zumbis_3, pizzas_3, cocas_3, cracha_3,marcelino)
 
 
 #Esse aqui é o de Ismael
@@ -175,27 +177,47 @@ zumbis_4 = [(32, 64, False, True, 1, 1),
 pizzas_4 = [(480+8, 64+8),(320+8, 160+8),(128+8, 416+8)]
 cocas_4 = [(288+8, 288+8)]
 cracha_4 = (192+8, 32+8)
-mapa_4 = [grid_4, porta_4, jogador_4, zumbis_4, pizzas_4, cocas_4, cracha_4]
-
+mapa_4 = [grid_4, porta_4, jogador_4, zumbis_4, pizzas_4, cocas_4, cracha_4,marcelino]
+# Zumbi(2*32, 13*32, 10, Paredes3, movimento_x=True,direcao_x = -1) #jogador_coord_init3 = [18*32, 4*32]
 
 #Tá vazio pq não pensei em nada bom ainda
 grid_5=[
     'PPPPPPPPPPPPPPPPPPPP',
-    'P------------------P',
-    'P------------------P',
-    'P------------------P',
-    'P------------------P',
-    'P------------------P',
-    'P------------------P',
-    'P------------------P',
-    'P------------------P',
-    'P------------------P',
-    'P------------------P',
-    'P------------------P',
-    'P------------------P',
-    'P------------------P',
+    'P--P--------P------P',
+    'P----PP---P-P---P-PP',
+    'PPPP-P----P-P--P---P',
+    'P----PPPP-P-P--P-PPP',
+    'PPPP---P--P-PPPP-P-P',
+    'P--PPPPPPPP-P----P-P',
+    'P-----------P--PPP-P',
+    'P-PPP-P-P-PPP------P',
+    'P-P-P-P-P-P-P----P-P',
+    'P-P-PPPPPPP-PP-P-P-P',
+    'P-P-----P---P--PPP-P',
+    'P-PP--P-PPP-PP-P---P',
+    'P----P---------P---P',
     'PPPPPPPPPPPPPPPPPPPP'
 ]
 
+porta5 = (3*32,2*32)
+jogador_coord_init5 = [13*32, 4*32]  #x_inicial, y_inicial,
+jogador5 =(jogador_coord_init5, 10,)  # coordenadas e velocidade
+zumbis5 = [(6*32, 1*32,True,False,-1,1),
+           (14*32, 1*32,True,False,1,-1),
+           (9*32, 4*32,False,True,1,1),
+           (7*32, 7*32,True,False,1,1),
+           (14*32, 8*32,True,False,-1,1),
+          (14*32, 6*32,False,True,1,1),
+           (18*32, 9*32,False,True,1,-1),
+           (1*32, 10*32,False,True,1,1),
+           (5*32, 11*32,True,False,1,1),
+           (12*32, 13*32,True,False,1,1)
+            ]
 
-Levels = (mapa_1,mapa_2,mapa_3,mapa_4)
+pizzas5 = [(7*32+8, 9*32+8),(16*32+8, 5*32+8),(16*32+8, 12*32+8)]
+cocas5 = [(10*32+8, 11*32+8)]
+cracha5 = (8*32+8, 5*32+8)
+mapa_5 = [grid_5, porta5, jogador5, zumbis5, pizzas5, cocas5, cracha5,marcelino]
+
+
+Levels = (mapa_1,mapa_2,mapa_3,mapa_4,mapa_5)
