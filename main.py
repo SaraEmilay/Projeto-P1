@@ -9,12 +9,29 @@ CINZA = (150, 150, 150)
 
 pygame.init()
 LARGURA, ALTURA = 640, 480
+#criando botoes
+
+botao_Credit=Botao("creditos",192,64,224,272)
+botao_jogar=Botao("Jogar",192,64,224,144 )
+botao_Histo1=Botao("Pular",192,64,416,384)
+botao_Menu=Botao("Voltar para o Menu",192,64,64,384)
+botao_Reiniciar=Botao("Jogar de novo",192,64,80,208)
+botao_Fim=Botao("Encerrar jogo",192,64,368,208)
 
 # Define o título da JANELA e estabelece a taxa de quadros por segundo.
 pygame.display.set_caption("O resgate de Marcelinho")
 JANELA = pygame.display.set_mode((LARGURA, ALTURA))
 relogio = pygame.time.Clock()
 FPS = 60
+
+#mudança de tela
+configuracao = {
+    "Menu_Inicial": True,
+    "jogo_iniciado": False,
+    "creditos":False,
+    "Historia_1":False,
+    "Fim do jogo":False
+}
 
 
 def colisoes(jogador, Zumbis, Pizzas, Cocas, cracha, pizzas_possuidas, vidas):
@@ -70,6 +87,86 @@ def reiniciar(jogador, Zumbis, Pizzas, Cocas, cracha):
     return vidas 
 
 
+def menu_inicial():
+
+
+    global configuracao
+    fonte_textos = pygame.font.SysFont('arial', 30)
+    texto_contador = fonte_textos.render("menu:", True, BRANCO)
+    
+    m_rodando = True
+    
+    while m_rodando:
+        pygame.time.delay(50)
+        relogio.tick(FPS)
+        if botao_jogar.draw():
+            m_rodando = False
+            configuracao["Historia_1"]=True
+            configuracao["Menu_Inicial"]=False
+        if botao_Credit.draw():
+            m_rodando = False
+            configuracao["Menu_Inicial"]=False
+            configuracao["creditos"]=True
+
+        for evento in pygame.event.get():
+            if evento.type == pygame.QUIT:  
+                m_rodando = False
+
+                pygame.quit()
+        
+        JANELA.blit(texto_contador, [32, 32])
+        pygame.display.update()
+
+def creditos():
+    global configuracao
+    fonte_textos = pygame.font.SysFont('arial', 30)
+    texto_contador = fonte_textos.render("creditos:", True, BRANCO)
+    
+    m_rodando = True
+    
+    while m_rodando:
+        pygame.time.delay(50)
+        relogio.tick(FPS)
+        if botao_Menu.draw():
+            m_rodando = False
+            configuracao["creditos"]=False
+            configuracao["Menu_Inicial"]= True
+
+
+        for evento in pygame.event.get():
+            if evento.type == pygame.QUIT:  
+                m_rodando = False
+
+                pygame.quit()
+        
+        JANELA.blit(texto_contador, [32, 32])
+        pygame.display.update()
+
+def historia_1():
+    global configuracao
+    fonte_textos = pygame.font.SysFont('arial', 30)
+    texto_contador = fonte_textos.render("Historia do Jogo:", True, BRANCO)
+    
+    m_rodando = True
+    
+    while m_rodando:
+        pygame.time.delay(50)
+        relogio.tick(FPS)
+        if botao_Histo1.draw():
+            m_rodando = False
+            configuracao["Historia_1"]=False
+            configuracao["jogo_iniciado"]= True
+
+
+        for evento in pygame.event.get():
+            if evento.type == pygame.QUIT:  
+                m_rodando = False
+
+                pygame.quit()
+        
+        JANELA.blit(texto_contador, [32, 32])
+        pygame.display.update()
+
 def rodar_jogo(Niveis_tupla):
 
     continuar = True
@@ -97,6 +194,8 @@ def rodar_jogo(Niveis_tupla):
             for evento in pygame.event.get():
                 if evento.type == pygame.QUIT:
                     fim_de_nivel = True
+                    configuracao["jogo_iniciado"]=False
+                    configuracao["Fim do jogo"]=True
                 if evento.type == pygame.USEREVENT + 0:
                     jogador.invulnerabilidade = False
                     Jogador.cor = BRANCO
@@ -109,10 +208,8 @@ def rodar_jogo(Niveis_tupla):
             for zumbi in Zumbis:
                 zumbi.movimento(LARGURA, ALTURA)
             pizzas_possuidas, vidas = colisoes(jogador, Zumbis, Pizzas, Cocas, cracha, pizzas_possuidas, vidas)
-            if vidas == 0:
-                vidas = reiniciar(jogador, Zumbis, Pizzas, Cocas, cracha)
-                level_atual = 0
-                fim_de_nivel = True
+            
+                       
             if jogador.passou_de_fase and level_atual < 3:
                 level_atual += 1
                 fim_de_nivel = True
@@ -138,10 +235,41 @@ def rodar_jogo(Niveis_tupla):
             if not cracha.coletada:
                 pygame.draw.rect(JANELA,Cracha.cor, cracha.rect)
             pygame.draw.rect(JANELA, Porta.cor, porta.rect)
+            
+            if vidas == 0:
+                if botao_Reiniciar.draw():
+                    pizzas_possuidas = reiniciar()
+                    vidas = reiniciar(jogador, Zumbis, Pizzas, Cocas, cracha)
+                    level_atual = 0
+                    fim_de_nivel = True
+                if botao_Fim.draw():
+                    configuracao["jogo_iniciado"]=False
+                    configuracao["Fim do jogo"]=True
             JANELA.blit(texto_contador, [32, 32])   
             pygame.display.update()
-            
 
-rodar_jogo(Niveis_tupla)
+rodando=True
+
+while rodando:
+
+    for evento in pygame.event.get():
+        if evento.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+    
+    JANELA.fill(PRETO)  # Limpa a tela
+    if configuracao["Menu_Inicial"]==True:
+        menu_inicial()
+    elif configuracao["creditos"]==True:
+        creditos()
+    elif configuracao["Historia_1"]==True:
+        historia_1()
+    elif configuracao["jogo_iniciado"]==True:
+        rodar_jogo(Niveis_tupla)
+    elif configuracao["Fim do jogo"]==True:
+        rodando=False
+        
+    pygame.display.update()
+
 
 pygame.quit()
