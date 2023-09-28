@@ -64,7 +64,7 @@ class Jogador:
 class Zumbi:
     cor = (70,109,67)
     #As variáveis x e y iniciais são usadas para criação do retângulo e como coordenadas padrão para onde os zumbis voltarão dps do fim de jogo. Os movimentos são booleanas que avaliam se deve se mover nessa direção(temporário) e as direção(sentido seria mais apropriado?) definem se se movem para um lado ou para o outro. 
-    def __init__(self, x_inicial, y_inicial, velocidade, Paredes, movimento_x = False, movimento_y = False, direcao_x = 1, direcao_y = 1):
+    def __init__(self, x_inicial, y_inicial, movimento_x, movimento_y, direcao_x, direcao_y, Paredes):
         self.rect = pygame.Rect(x_inicial, y_inicial, 32, 32)
         self.Paredes = Paredes
         self.x_inicial = x_inicial
@@ -73,8 +73,8 @@ class Zumbi:
         self.mov_y = movimento_y
         self.direcao_x = direcao_x
         self.direcao_y = direcao_y
-        self.velocidade_base = velocidade
-        self.velocidade = velocidade
+        self.velocidade_base = 10
+        self.velocidade = 10
 
     #Antes de movimentar, checa se a instância possui movimento na determinada direção. No futuro será substituído por movimento em rotas.    
     def movimento(self, LARGURA, ALTURA):

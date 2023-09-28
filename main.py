@@ -1,8 +1,8 @@
 import pygame
 import random
 from classes import*
-from leveis import Levels
-Niveis_tupla = Levels
+from leveis import Levels, gera_mapas
+Levels = Levels
 PRETO = (0, 0, 0)
 BRANCO = (255, 255, 255)
 CINZA = (150, 150, 150)
@@ -34,9 +34,9 @@ configuracao = {
 }
 
 
-def colisoes(jogador, Zumbis, Pizzas, Cocas, cracha, pizzas_possuidas, vidas):
+def colisoes(jogador, zumbis, pizzas, cocas, cracha, pizzas_possuidas, vidas):
     # Colisão de zumbi e jogador. Se tem pizza, perde uma das pizzas. Se não, perde uma das vidas, desativa qualquer coca-café em efeito e volta para as coordenadas iniciais. Em qualquer um dos casos, fica invulnerável por 2000 milissegundos
-    for zumbi in Zumbis:
+    for zumbi in zumbis:
         if jogador.rect.colliderect(zumbi.rect) and not jogador.invulnerabilidade:
             jogador.invulnerabilidade = True
             Jogador.cor = CINZA
@@ -47,20 +47,20 @@ def colisoes(jogador, Zumbis, Pizzas, Cocas, cracha, pizzas_possuidas, vidas):
                 pizzas_possuidas -= 1
             else:
                 vidas -= 1
-                for zumbi in Zumbis:
+                for zumbi in zumbis:
                     zumbi.velocidade = zumbi.velocidade_base 
                 jogador.rect.x, jogador.rect.y = jogador.x_inicial, jogador.y_inicial # Retorna o jogador a posição predefinida.
     #Colisão entre pizza e jogador
-    for pizza in Pizzas:
+    for pizza in pizzas:
         if jogador.rect.colliderect(pizza.rect) and not pizza.coletada:
             pizza.coletada = True  # Faz a Pizza desaparecer e não poder ser coletada mais vezes
             pizzas_possuidas += 1
     # Colisão entre coca café e jogador. Faz os zumbis se moverem com metade da velocidade pelos próximos 10 segundos.
-    if len(Cocas) != 0:
-        for coca_cafe in Cocas:
+    if len(cocas) != 0:
+        for coca_cafe in cocas:
             if jogador.rect.colliderect(coca_cafe.rect) and not coca_cafe.coletada:
                 coca_cafe.coletada = True  # Faz a coca_cafe desaparecer e não poder ser coletada mais vezes
-                for zumbi in Zumbis:
+                for zumbi in zumbis:
                     zumbi.velocidade *= 1/2
                 FIM_DO_BONUS = pygame.USEREVENT + 1
                 pygame.time.set_timer(FIM_DO_BONUS, 10000, 1)
@@ -71,18 +71,18 @@ def colisoes(jogador, Zumbis, Pizzas, Cocas, cracha, pizzas_possuidas, vidas):
 
 
 # Quando o jogador perde as 3 vidas(a ser debatido), ele regressa a posição inicial(consequência da colisão com zumbi), volta a ter 3 vidas e velocidade 10, os zumbis e coletáveis voltam a seus estados inicais.
-def reiniciar(jogador, Zumbis, Pizzas, Cocas, cracha):
+def reiniciar(jogador, zumbis, pizzas, cocas, cracha):
     jogador.invulnerabilidade = False
     Jogador.cor = BRANCO
     vidas = 3
     jogador.velocidade = 10
     jogador.tem_cracha = False
     cracha.coletada = False
-    for zumbi in Zumbis:
+    for zumbi in zumbis:
         zumbi.rect.x, zumbi.rect.y = zumbi.x_inicial, zumbi.y_inicial
-    for pizza in Pizzas:
+    for pizza in pizzas:
         pizza.coletada = False
-    for coca_cafe in Cocas:
+    for coca_cafe in cocas:
         coca_cafe.coletada = False
     return vidas 
 
@@ -167,21 +167,21 @@ def historia_1():
         JANELA.blit(texto_contador, [32, 32])
         pygame.display.update()
 
-def rodar_jogo(Niveis_tupla):
+def rodar_jogo(Levels):
 
     continuar = True
     level_atual = 0
     vidas = 3
     pizzas_possuidas = 0
     while continuar: 
-        Niveis = list(Niveis_tupla)
-        Paredes = Niveis[level_atual][0]
-        porta = Niveis[level_atual][1]
-        jogador = Niveis[level_atual][2]
-        Zumbis = Niveis[level_atual][3]
-        Pizzas = Niveis[level_atual][4]
-        Cocas = Niveis[level_atual][5]
-        cracha = Niveis[level_atual][6]
+        nivel = gera_mapas(*Levels[level_atual])
+        paredes = nivel[0]
+        porta = nivel[1]
+        jogador = nivel[2]
+        zumbis = nivel[3]
+        pizzas = nivel[4]
+        cocas = nivel[5]
+        cracha = nivel[6]
         print(level_atual)
         print(jogador.passou_de_fase)
         fim_de_nivel = False
@@ -194,20 +194,21 @@ def rodar_jogo(Niveis_tupla):
             for evento in pygame.event.get():
                 if evento.type == pygame.QUIT:
                     fim_de_nivel = True
+                    continuar = False
                     configuracao["jogo_iniciado"]=False
                     configuracao["Fim do jogo"]=True
                 if evento.type == pygame.USEREVENT + 0:
                     jogador.invulnerabilidade = False
                     Jogador.cor = BRANCO
                 if evento.type == pygame.USEREVENT + 1:
-                    for zumbi in Zumbis:
+                    for zumbi in zumbis:
                         zumbi.velocidade = zumbi.velocidade_base 
-            # Controla o movimento do jogador, dos Zumbis, testa colisões e avalia se o jogo terminou. Então, redesenha a janela de acordo.
+            # Controla o movimento do jogador, dos zumbis, testa colisões e avalia se o jogo terminou. Então, redesenha a janela de acordo.
             comandos = pygame.key.get_pressed()
             jogador.movimento(comandos, LARGURA, ALTURA)
-            for zumbi in Zumbis:
+            for zumbi in zumbis:
                 zumbi.movimento(LARGURA, ALTURA)
-            pizzas_possuidas, vidas = colisoes(jogador, Zumbis, Pizzas, Cocas, cracha, pizzas_possuidas, vidas)
+            pizzas_possuidas, vidas = colisoes(jogador, zumbis, pizzas, cocas, cracha, pizzas_possuidas, vidas)
             
                        
             if jogador.passou_de_fase and level_atual < 3:
@@ -219,27 +220,26 @@ def rodar_jogo(Niveis_tupla):
                 
 
             JANELA.fill(PRETO)
-            for parede in Paredes:
+            for parede in paredes:
                 pygame.draw.rect(JANELA,(80,9,200), parede.rect)
-
-            pygame.draw.rect(JANELA, (Jogador.cor), jogador.rect)  # JANELA, cor, tamanho
-            for zumbi in Zumbis:
+            for zumbi in zumbis:
                 pygame.draw.rect(JANELA, Zumbi.cor, zumbi.rect)  # quadrado verde-zumbi
-            if len(Cocas) != 0:
-                for coca_cafe in Cocas:
+            pygame.draw.rect(JANELA, Porta.cor, porta.rect)
+            if len(cocas) != 0:
+                for coca_cafe in cocas:
                     if not coca_cafe.coletada:
                         pygame.draw.rect(JANELA, Coca_cafe.cor, coca_cafe.rect)  # retangulo marrom
-            for pizza in Pizzas:
+            for pizza in pizzas:
                 if not pizza.coletada:
                     pygame.draw.rect(JANELA, Pizza.cor, pizza.rect)  # retângulo pizza
             if not cracha.coletada:
                 pygame.draw.rect(JANELA,Cracha.cor, cracha.rect)
-            pygame.draw.rect(JANELA, Porta.cor, porta.rect)
+            pygame.draw.rect(JANELA, (Jogador.cor), jogador.rect)  # JANELA, cor, tamanho
             
             if vidas == 0:
                 if botao_Reiniciar.draw():
-                    pizzas_possuidas = reiniciar()
-                    vidas = reiniciar(jogador, Zumbis, Pizzas, Cocas, cracha)
+                    pizzas_possuidas = 0
+                    vidas = reiniciar(jogador, zumbis, pizzas, cocas, cracha)
                     level_atual = 0
                     fim_de_nivel = True
                 if botao_Fim.draw():
@@ -265,7 +265,7 @@ while rodando:
     elif configuracao["Historia_1"]==True:
         historia_1()
     elif configuracao["jogo_iniciado"]==True:
-        rodar_jogo(Niveis_tupla)
+        rodar_jogo(Levels)
     elif configuracao["Fim do jogo"]==True:
         rodando=False
         
