@@ -255,10 +255,6 @@ def rodar_jogo(Levels):
             if jogador.passou_de_fase and level_atual < 4:
                 level_atual += 1
                 fim_de_nivel = True
-            elif jogador.passou_de_fase and level_atual == 4:
-                continuar = False
-                fim_de_nivel = True
-                
 
             JANELA.fill(PRETO)
             for parede in paredes:
