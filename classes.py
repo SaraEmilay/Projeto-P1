@@ -1,4 +1,5 @@
 import pygame
+from os import path
 
 pygame.init()
 
@@ -153,7 +154,7 @@ class Cracha:
         self.coletada = coletada
 
 
-# Classe da saida, ainda faltam informações quanto ao tamanho e tals
+
 class Porta:
     cor = (255, 0, 0)
 
