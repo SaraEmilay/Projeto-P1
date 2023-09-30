@@ -135,16 +135,16 @@ zumbis_3 = [(3*32, 12*32, True, False, -1, 1),
            (10*32, 4*32, False, True, 1, -1),
            (11*32, 6*32, True, False, 1, 1),
            (16*32, 7*32, False, True, 1, 1),
-           (3*32, 16*32, True, False, 1, 1),
            (4*32, 13*32, True, False, -1, 1),
-           (5*32, 16*32, True, False, 1, 1),]
+           (16*32, 2*32, True, False, 1, 1),
+           (16*32, 4*32, True, False, 1, 1),
+           (13*32, 3*32, True, False, -1, 1),]
 pizzas_3 = [(2*32+8, 1*32+8),(7*32+8, 5*32+8)]
 cocas_3 = [(10*32+8, 11*32+8)]
 cracha_3 = (5*32+8, 7*32+8)
 mapa_3 = (grid_3, porta_3, jogador_3, zumbis_3, pizzas_3, cocas_3, cracha_3,marcelino)
 
 
-#Esse aqui é o de Ismael
 grid_4=[
     'PPPPPPPPPPPPPPPPPPPP',
     'P--P-P-------------P',
@@ -180,7 +180,7 @@ cracha_4 = (192+8, 32+8)
 mapa_4 = [grid_4, porta_4, jogador_4, zumbis_4, pizzas_4, cocas_4, cracha_4,marcelino]
 # Zumbi(2*32, 13*32, 10, Paredes3, movimento_x=True,direcao_x = -1) #jogador_coord_init3 = [18*32, 4*32]
 
-#Tá vazio pq não pensei em nada bom ainda
+
 grid_5=[
     'PPPPPPPPPPPPPPPPPPPP',
     'P--P--------P------P',
@@ -214,7 +214,7 @@ zumbis5 = [(6*32, 1*32,True,False,-1,1),
            (12*32, 13*32,True,False,1,1)
             ]
 
-pizzas5 = [(7*32+8, 9*32+8),(16*32+8, 5*32+8),(16*32+8, 12*32+8)]
+pizzas5 = [(7*32+8, 9*32+8),(16*32+8, 5*32+8),(16*32+8, 12*32+8), (11*32+8, 9*32+8)]
 cocas5 = [(10*32+8, 11*32+8)]
 cracha5 = (8*32+8, 5*32+8)
 mapa_5 = [grid_5, porta5, jogador5, zumbis5, pizzas5, cocas5, cracha5,marcelino]

@@ -12,13 +12,13 @@ pygame.init()
 LARGURA, ALTURA = 640, 480
 #criando botoes
 
-botao_Credit=Botao("creditos",192,64,224,272)
-botao_jogar=Botao("Jogar",192,64,224,144 )
-botao_Histo1=Botao("Pular",192,64,416,384)
-botao_Menu=Botao("Voltar para o Menu",192,64,64,384)
-botao_Reiniciar=Botao("Jogar de novo",192,64,80,208)
-botao_Fim=Botao("Encerrar jogo",192,64,368,208)
-botao_Menu_Ganou=Botao("Voltar para o Menu",192,64,80,208)
+botao_credito=Botao("Créditos", 192,64, 224,272)
+botao_jogar=Botao("Jogar", 192,64, 224,144 )
+botao_historia=Botao("Jogar", 192,64, 416,384)
+botao_voltar_menu=Botao("Voltar para o Menu", 250,64, 64,384) #Volta para o Menu após os créditos
+botao_reiniciar=Botao("Jogar de novo", 192,64, 80,208) #Volta para tela inicial após o player perder todas as vidas
+botao_fim=Botao("Encerrar jogo", 192,64, 368,208) #Opção de fechar a tela após o player perder todas as vidas
+botao_menu_ganhou=Botao("Voltar para o Menu", 192,64, 80,208) #Opção de jogar novamente após o player vencer o jogo
 
 # Define o título da JANELA e estabelece a taxa de quadros por segundo.
 pygame.display.set_caption("O resgate de Marcelinho")
@@ -105,11 +105,11 @@ def ganhou():
     while m_rodando:
         pygame.time.delay(50)
         relogio.tick(FPS)
-        if botao_Menu_Ganou.draw():
+        if botao_menu_ganhou.draw():
             m_rodando = False
             configuracao["Ganhou_jogo"]=False
             configuracao["Menu_Inicial"]=True
-        if botao_Fim.draw():
+        if botao_fim.draw():
             m_rodando = False
             configuracao["Ganhou_jogo"]=False
             configuracao["Fim do jogo"]=True
@@ -142,7 +142,7 @@ def menu_inicial():
             m_rodando = False
             configuracao["Historia_1"]=True
             configuracao["Menu_Inicial"]=False
-        if botao_Credit.draw():
+        if botao_credito.draw():
             m_rodando = False
             configuracao["Menu_Inicial"]=False
             configuracao["creditos"]=True
@@ -166,7 +166,7 @@ def creditos():
     while m_rodando:
         pygame.time.delay(50)
         relogio.tick(FPS)
-        if botao_Menu.draw():
+        if botao_menu.draw():
             m_rodando = False
             configuracao["creditos"]=False
             configuracao["Menu_Inicial"]= True
@@ -194,7 +194,7 @@ def historia_1():
         JANELA.blit(texto_contador, [32, 32])
         pygame.time.delay(50)
         relogio.tick(FPS)
-        if botao_Histo1.draw():
+        if botao_historia.draw():
             m_rodando = False
             configuracao["Historia_1"]=False
             configuracao["jogo_iniciado"]= True
@@ -292,12 +292,12 @@ def rodar_jogo(Levels):
                     configuracao["jogo_iniciado"]=False
                     
             if vidas == 0:
-                if botao_Reiniciar.draw():
+                if botao_reiniciar.draw():
                     pizzas_possuidas = 0
                     vidas = reiniciar(jogador, zumbis, pizzas, cocas, cracha)
                     level_atual = 0
                     fim_de_nivel = True
-                if botao_Fim.draw():
+                if botao_fim.draw():
 
                     configuracao["jogo_iniciado"]=False
                     configuracao["Fim do jogo"]=True
