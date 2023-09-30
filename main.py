@@ -40,9 +40,7 @@ configuracao = {
     "Fim do jogo":False,
     "Ganhou_jogo":False
 }
-#sprite
-sprite_porta = pygame.image.load('porta.jpg')
-sprite_porta_1 = pygame.transform.scale(sprite_porta,(32,32))
+
 
 def colisoes(jogador, zumbis, pizzas, cocas, cracha, pizzas_possuidas, vidas):
     # Colisão de zumbi e jogador. Se tem pizza, perde uma das pizzas. Se não, perde uma das vidas, desativa qualquer coca-café em efeito e volta para as coordenadas iniciais. Em qualquer um dos casos, fica invulnerável por 2000 milissegundos
@@ -143,13 +141,13 @@ def menu_inicial():
     global configuracao
     fonte_textos = pygame.font.SysFont('arial', 30)
     texto_contador = fonte_textos.render("menu:", True, BRANCO)
-    #background_menu_inicial = pygame.image.load("Menu inicial.jpg")
-    #tamanho_background_menu_incial = pygame.transform.scale(background_menu_inicial,(640, 480))
+    background_menu_inicial = pygame.image.load("Menu inicial.jpg")
+    tamanho_background_menu_incial = pygame.transform.scale(background_menu_inicial,(640, 480))
 
     m_rodando = True
     
     while m_rodando:
-        #JANELA.blit(tamanho_background_menu_incial, (0, 0))
+        JANELA.blit(tamanho_background_menu_incial, (0, 0))
         JANELA.blit(texto_contador, [32, 32])
         pygame.time.delay(50)
         relogio.tick(FPS)
@@ -229,7 +227,7 @@ def rodar_jogo(Levels):
     continuar = True
     level_atual = 0
     vidas = 3
-    pizzas_possuidas = 0
+    pizzas_possuidas = 30
     while continuar: 
         nivel = gera_mapas(*Levels[level_atual])
         paredes = nivel[0]
@@ -281,13 +279,10 @@ def rodar_jogo(Levels):
                 pygame.draw.rect(JANELA, Zumbi.cor, zumbi.rect)  # quadrado verde-zumbi
             if level_atual <4 and not cracha.coletada:
                 pygame.draw.rect(JANELA, porta.cor, porta.rect)
-                JANELA.blit(sprite_porta_1, (18 * 32, 32))
             elif level_atual <4 and  cracha.coletada:
                     pygame.draw.rect(JANELA, VERDE, porta.rect)
-                    JANELA.blit(sprite_porta_1, (18 * 32, 32))
             elif level_atual ==4 and  not cracha.coletada:
                 pygame.draw.rect(JANELA, porta.cor, porta.rect)
-                JANELA.blit(sprite_porta_1, (18 * 32, 32))
             
                     
             if len(cocas) != 0:
