@@ -2,6 +2,8 @@ import pygame
 import random
 from classes import*
 from leveis import Levels, gera_mapas
+from os import path
+
 Levels = Levels
 PRETO = (0, 0, 0)
 BRANCO = (255, 255, 255)
@@ -99,10 +101,17 @@ def ganhou():
     global configuracao
     fonte_textos = pygame.font.SysFont('arial', 30)
     texto_contador = fonte_textos.render("Tela final:", True, BRANCO)
+    background_ganhou = pygame.image.load("Foto ganhou.jpg")
+    tamanho_background_ganhou = pygame.transform.scale(background_ganhou,(640, 480))
+    som_ganhou = pygame.mixer.Sound("ganhou.wav")  
+    som_ganhou.play()
+    
     
     m_rodando = True
     
     while m_rodando:
+        JANELA.blit(tamanho_background_ganhou, (0, 0))
+        JANELA.blit(texto_contador, [32, 32])
         pygame.time.delay(50)
         relogio.tick(FPS)
         if botao_menu_ganhou.draw():
@@ -132,10 +141,14 @@ def menu_inicial():
     global configuracao
     fonte_textos = pygame.font.SysFont('arial', 30)
     texto_contador = fonte_textos.render("menu:", True, BRANCO)
+    background_menu_inicial = pygame.image.load("Menu inicial.jpg")
+    tamanho_background_menu_incial = pygame.transform.scale(background_menu_inicial,(640, 480))
 
     m_rodando = True
     
     while m_rodando:
+        JANELA.blit(tamanho_background_menu_incial, (0, 0))
+        JANELA.blit(texto_contador, [32, 32])
         pygame.time.delay(50)
         relogio.tick(FPS)
         if botao_jogar.draw():
