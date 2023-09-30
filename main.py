@@ -132,7 +132,7 @@ def menu_inicial():
     global configuracao
     fonte_textos = pygame.font.SysFont('arial', 30)
     texto_contador = fonte_textos.render("menu:", True, BRANCO)
-    
+
     m_rodando = True
     
     while m_rodando:
@@ -185,10 +185,13 @@ def historia_1():
     global configuracao
     fonte_textos = pygame.font.SysFont('arial', 30)
     texto_contador = fonte_textos.render("Historia do Jogo:", True, BRANCO)
-    
+    background_historia = pygame.image.load("bac.jpg")
+    tamanho_background_historia = pygame.transform.scale(background_historia,(640, 480))
     m_rodando = True
     
     while m_rodando:
+        JANELA.blit(tamanho_background_historia, (0, 0))
+        JANELA.blit(texto_contador, [32, 32])
         pygame.time.delay(50)
         relogio.tick(FPS)
         if botao_Histo1.draw():
@@ -202,8 +205,8 @@ def historia_1():
                 m_rodando = False
 
                 pygame.quit()
-        
-        JANELA.blit(texto_contador, [32, 32])
+
+
         pygame.display.update()
 
 def rodar_jogo(Levels):

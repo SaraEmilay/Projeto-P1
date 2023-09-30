@@ -1,5 +1,4 @@
 import pygame
-from main import *
 
 pygame.init()
 
@@ -165,7 +164,6 @@ class Porta:
 LARGURA, ALTURA = 640, 480
 JANELA = pygame.display.set_mode((LARGURA, ALTURA))
 fonte_textos = pygame.font.SysFont('arial', 30)
-
 
 # classe dos botões
 class Botao:
