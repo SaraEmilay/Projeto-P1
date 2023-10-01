@@ -113,7 +113,7 @@ def ganhou():
     
     som_ganhou = pygame.mixer.Sound("ganhou.wav")
     som_ganhou.play()
-    background_ganhou = pygame.image.load("ganhou.jpg")
+    background_ganhou = pygame.image.load("tela_final jogo.jpg")
     tamanho_background_ganhou = pygame.transform.scale(background_ganhou,(640, 480))
 
 
@@ -176,7 +176,7 @@ def menu_inicial():
 
 def creditos():
     global configuracao
-    background_creditos = pygame.image.load("creditos.jpg")
+    background_creditos = pygame.image.load("tela_creditos jogo.jpg")
     tamanho_background_creditos = pygame.transform.scale(background_creditos, (640, 480))
     m_rodando = True
     
@@ -200,7 +200,7 @@ def creditos():
 
 def historia_1():
     global configuracao
-    background_historia = pygame.image.load("bac.jpg")
+    background_historia = pygame.image.load("tela_historia jogo.jpg")
     tamanho_background_historia = pygame.transform.scale(background_historia,(640, 480))
     m_rodando = True
     
