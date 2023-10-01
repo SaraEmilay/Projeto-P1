@@ -14,8 +14,8 @@ pygame.init()
 LARGURA, ALTURA = 640, 480
 #criando botoes
 
-botao_credito=Botao("Créditos", 192,64, 224,272)
-botao_jogar=Botao("Jogar", 192,64, 224,144 )
+botao_credito=Botao("Créditos", 150,64, 155,275)
+botao_jogar=Botao("Jogar", 150,64, 340,275 )
 botao_historia=Botao("Jogar", 192,64, 416,384)
 botao_voltar_menu=Botao("Voltar para o Menu", 250,64, 64,384) #Volta para o Menu após os créditos
 botao_reiniciar=Botao("Jogar de novo", 192,64, 80,208) #Volta para tela inicial após o player perder todas as vidas
@@ -113,8 +113,8 @@ def ganhou():
     texto_contador = fonte_textos.render("Tela final:", True, BRANCO)
     som_ganhou = pygame.mixer.Sound("ganhou.wav")
     som_ganhou.play()
-    #background_ganhou = pygame.image.load("Foto ganhou.jpg")
-    #tamanho_background_ganhou = pygame.transform.scale(background_ganhou,(640, 480))
+    background_ganhou = pygame.image.load("ganhou.jpg")
+    tamanho_background_ganhou = pygame.transform.scale(background_ganhou,(640, 480))
 
 
     
@@ -122,8 +122,7 @@ def ganhou():
     m_rodando = True
     
     while m_rodando:
-        #JANELA.blit(tamanho_background_ganhou, (0, 0))
-        JANELA.blit(texto_contador, [32, 32])
+        JANELA.blit(tamanho_background_ganhou, (0, 0))
         pygame.time.delay(50)
         relogio.tick(FPS)
         if botao_menu_ganhou.draw():
@@ -141,26 +140,22 @@ def ganhou():
                 m_rodando = False
 
                 pygame.quit()
-        
-        JANELA.blit(texto_contador, [32, 32])
         pygame.display.update()
 
 
 
 def menu_inicial():
 
-
     global configuracao
     fonte_textos = pygame.font.SysFont('arial', 30)
     texto_contador = fonte_textos.render("menu:", True, BRANCO)
-    #background_menu_inicial = pygame.image.load("Menu inicial.jpg")
-    #tamanho_background_menu_incial = pygame.transform.scale(background_menu_inicial,(640, 480))
+    background_menu_inicial = pygame.image.load("menu_inicial.jpg")
+    tamanho_background_menu_incial = pygame.transform.scale(background_menu_inicial,(640, 480))
 
     m_rodando = True
     
     while m_rodando:
-     #   JANELA.blit(tamanho_background_menu_incial, (0, 0))
-        JANELA.blit(texto_contador, [32, 32])
+
         pygame.time.delay(50)
         relogio.tick(FPS)
         if botao_jogar.draw():
@@ -177,33 +172,32 @@ def menu_inicial():
                 m_rodando = False
 
                 pygame.quit()
-        
-        JANELA.blit(texto_contador, [32, 32])
+        JANELA.blit(tamanho_background_menu_incial, (0, 0))
         pygame.display.update()
 
 def creditos():
     global configuracao
     fonte_textos = pygame.font.SysFont('arial', 30)
     texto_contador = fonte_textos.render("creditos:", True, BRANCO)
-    
+    background_creditos = pygame.image.load("creditos.jpg")
+    tamanho_background_creditos = pygame.transform.scale(background_creditos, (640, 480))
     m_rodando = True
     
     while m_rodando:
         pygame.time.delay(50)
         relogio.tick(FPS)
-        if botao_menu.draw():
+        if botao_voltar_menu.draw():
             m_rodando = False
             configuracao["creditos"]=False
             configuracao["Menu_Inicial"]= True
-
+        JANELA.blit(tamanho_background_creditos,(0,0))
 
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:  
                 m_rodando = False
 
                 pygame.quit()
-        
-        JANELA.blit(texto_contador, [32, 32])
+
         pygame.display.update()
 
 def historia_1():
@@ -216,7 +210,6 @@ def historia_1():
     
     while m_rodando:
         JANELA.blit(tamanho_background_historia, (0, 0))
-        JANELA.blit(texto_contador, [32, 32])
         pygame.time.delay(50)
         relogio.tick(FPS)
         if botao_historia.draw():
@@ -327,7 +320,7 @@ def rodar_jogo(Levels):
                     configuracao["jogo_iniciado"]=False
                     configuracao["Fim do jogo"]=True
                     pygame.quit()
-            JANELA.blit(texto_contador, [32, 32])   
+            JANELA.blit(texto_contador, [32, 32])
             pygame.display.update()
 
 rodando=True
