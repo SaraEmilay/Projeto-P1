@@ -4,6 +4,7 @@ from classes import*
 from leveis import Levels, gera_mapas
 from os import path
 
+
 Levels = Levels
 PRETO = (0, 0, 0)
 BRANCO = (255, 255, 255)
@@ -30,7 +31,7 @@ relogio = pygame.time.Clock()
 FPS = 60
 
 #marcelino
-marcelino=Marcelinho(1*32,1*32, 'marcelinho.jpg')
+marcelino=Marcelinho(1*32,2*32, 'marcelinho.jpg')
 
 #mudança de tela
 configuracao = {
@@ -41,13 +42,7 @@ configuracao = {
     "Fim do jogo":False,
     "Ganhou_jogo":False
 }
-som_jogo = pygame.mixer.Sound("musica_jogo.mp3")
-som_jogo.play()
-volume = 1 # ajuste conforme necessário
-som_jogo.set_volume(volume)
 
-# Inicia a reprodução da trilha sonora em loop
-som_jogo.play(loops=-1)
 
 def colisoes(jogador, zumbis, pizzas, cocas, cracha, pizzas_possuidas, vidas):
     # Colisão de zumbi e jogador. Se tem pizza, perde uma das pizzas. Se não, perde uma das vidas, desativa qualquer coca-café em efeito e volta para as coordenadas iniciais. Em qualquer um dos casos, fica invulnerável por 2000 milissegundos
@@ -64,8 +59,7 @@ def colisoes(jogador, zumbis, pizzas, cocas, cracha, pizzas_possuidas, vidas):
                 if pizzas_possuidas > 0:
                     pizzas_possuidas -= 1
                 else:
-                    if vidas>0:
-                        vidas -= 1
+                    vidas -= 1
                     for zumbi in zumbis:
                         zumbi.velocidade = zumbi.velocidade_base 
                     jogador.rect.x, jogador.rect.y = jogador.x_inicial, jogador.y_inicial # Retorna o jogador a posição predefinida.
@@ -73,7 +67,7 @@ def colisoes(jogador, zumbis, pizzas, cocas, cracha, pizzas_possuidas, vidas):
         for pizza in pizzas:
             if jogador.rect.colliderect(pizza.rect) and not pizza.coletada:
                 pizza.coletada = True  # Faz a Pizza desaparecer e não poder ser coletada mais vezes
-                pizzas_possuidas += 30
+                pizzas_possuidas += 1
                 som_ganhou = pygame.mixer.Sound("pegar.mp3")
                 som_ganhou.play()
 
@@ -116,11 +110,9 @@ def reiniciar(jogador, zumbis, pizzas, cocas, cracha):
 
 def ganhou():
     global configuracao
-    fonte_textos = pygame.font.SysFont('arial', 30)
-    texto_contador = fonte_textos.render("Tela final:", True, BRANCO)
+    
     som_ganhou = pygame.mixer.Sound("ganhou.wav")
     som_ganhou.play()
-    som_jogo.stop()
     background_ganhou = pygame.image.load("ganhou.jpg")
     tamanho_background_ganhou = pygame.transform.scale(background_ganhou,(640, 480))
 
@@ -156,9 +148,7 @@ def ganhou():
 def menu_inicial():
 
     global configuracao
-    fonte_textos = pygame.font.SysFont('arial', 30)
-    texto_contador = fonte_textos.render("menu:", True, BRANCO)
-    background_menu_inicial = pygame.image.load("menu_inicial.jpg")
+    background_menu_inicial = pygame.image.load("tela_inicial jogo.jpg")
     tamanho_background_menu_incial = pygame.transform.scale(background_menu_inicial,(640, 480))
 
     m_rodando = True
@@ -186,8 +176,6 @@ def menu_inicial():
 
 def creditos():
     global configuracao
-    fonte_textos = pygame.font.SysFont('arial', 30)
-    texto_contador = fonte_textos.render("creditos:", True, BRANCO)
     background_creditos = pygame.image.load("creditos.jpg")
     tamanho_background_creditos = pygame.transform.scale(background_creditos, (640, 480))
     m_rodando = True
@@ -212,8 +200,6 @@ def creditos():
 
 def historia_1():
     global configuracao
-    fonte_textos = pygame.font.SysFont('arial', 30)
-    texto_contador = fonte_textos.render("Historia do Jogo:", True, BRANCO)
     background_historia = pygame.image.load("bac.jpg")
     tamanho_background_historia = pygame.transform.scale(background_historia,(640, 480))
     m_rodando = True
@@ -238,7 +224,7 @@ def historia_1():
         pygame.display.update()
 
 def rodar_jogo(Levels):
-    
+
     continuar = True
     level_atual = 0
     vidas = 3
@@ -254,14 +240,12 @@ def rodar_jogo(Levels):
         cracha = nivel[6]
         print(level_atual)
         print(jogador.passou_de_fase)
-        
         fim_de_nivel = False
         while not fim_de_nivel:
             fonte_contador = pygame.font.Font(None, 20)
             texto_contador = fonte_contador.render("Pizza:" + str(pizzas_possuidas) + "       Vidas:" + str(vidas) + '         Crachá:' + str(jogador.tem_cracha), True, BRANCO)
             pygame.time.delay(50)
             relogio.tick(FPS)
-            
             # Condição de interromper código
             for evento in pygame.event.get():
                 if evento.type == pygame.QUIT:
@@ -280,15 +264,13 @@ def rodar_jogo(Levels):
             comandos = pygame.key.get_pressed()
             jogador.movimento(comandos, LARGURA, ALTURA)
             for zumbi in zumbis:
-                zumbi.movimento(LARGURA, ALTURA)
+                zumbi.movimento()
             pizzas_possuidas, vidas = colisoes(jogador, zumbis, pizzas, cocas, cracha, pizzas_possuidas, vidas)
             #colide marcelino
             
                        
             if jogador.passou_de_fase and level_atual < 4:
                 level_atual += 1
-                som_porta = pygame.mixer.Sound("som_porta.mp3")
-                som_porta.play()
                 fim_de_nivel = True
 
             JANELA.fill(PRETO)
@@ -298,16 +280,13 @@ def rodar_jogo(Levels):
             for zumbi in zumbis:
                 #pygame.draw.rect(JANELA, Zumbi.cor, zumbi.rect)  # quadrado verde-zumbi
                 zumbi.desenhar(JANELA)
-            if level_atual <4 and not cracha.coletada:
+
+            if level_atual <4 :
                 #pygame.draw.rect(JANELA, porta.cor, porta.rect)
                 porta.desenhar(JANELA)
-            elif level_atual <4 and  cracha.coletada:
-                #pygame.draw.rect(JANELA, VERDE, porta.rect)
-                porta.desenhar(JANELA)
-            elif level_atual ==4 and  not cracha.coletada:
+            elif level_atual==4 and not cracha.coletada:
                 #pygame.draw.rect(JANELA, porta.cor, porta.rect)
                 porta.desenhar(JANELA)
-            
                     
             if len(cocas) != 0:
                 for coca_cafe in cocas:
@@ -335,16 +314,28 @@ def rodar_jogo(Levels):
                     configuracao["jogo_iniciado"]=False
                     
             if vidas == 0:
+                
                 if botao_reiniciar.draw():
                     pizzas_possuidas = 0
                     vidas = reiniciar(jogador, zumbis, pizzas, cocas, cracha)
                     level_atual = 0
                     fim_de_nivel = True
+                    
+                    
+                    
                 if botao_fim.draw():
 
                     configuracao["jogo_iniciado"]=False
                     configuracao["Fim do jogo"]=True
                     pygame.quit()
+                botao_menu =pygame.image.load("menu_inicial_botao.png")
+                botao_imagem_1 = pygame.transform.scale(botao_menu, (180, 160))
+                JANELA.blit(botao_imagem_1, (100, 180))   
+
+                botao_encerrar =pygame.image.load("fecar_jogo_botao.png")
+                botao_imagem_2 = pygame.transform.scale(botao_encerrar, (180, 160))
+                JANELA.blit(botao_imagem_2, (360, 180))  
+
             JANELA.blit(texto_contador, [32, 32])
             pygame.display.update()
 
