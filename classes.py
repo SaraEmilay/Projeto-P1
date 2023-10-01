@@ -8,7 +8,7 @@ pygame.init()
 class Jogador():
     cor = (255, 255, 255)
 
-    def __init__(self, coordenadas, velocidade, saida, Paredes, imagem, vidas=3):
+    def __init__(self, coordenadas, velocidade, saida, Paredes, imagem,imagem_esquerda, vidas=3):
         self.rect = pygame.Rect(*coordenadas, 18, 18)
         self.Paredes = Paredes
         self.x_inicial = coordenadas[0]
@@ -19,6 +19,7 @@ class Jogador():
         self.tem_cracha = False
         self.saida = saida
         self.passou_de_fase = False
+        self.carrega_imagem_2 =pygame.image.load(imagem_esquerda)
         self.carrega_imagem =pygame.image.load(imagem)
         self.imagem = pygame.transform.scale(self.carrega_imagem, (20, 20))
 
@@ -34,8 +35,10 @@ class Jogador():
             self.deslocamento_y = self.velocidade
         if comandos[pygame.K_RIGHT] and self.rect.x < LARGURA - 32:
             self.deslocamento_x = self.velocidade
+            self.imagem = pygame.transform.scale(self.carrega_imagem, (20, 20))
         if comandos[pygame.K_LEFT] and self.rect.x > 32:
             self.deslocamento_x = -self.velocidade
+            self.imagem = pygame.transform.scale(self.carrega_imagem_2, (20, 20))
 
         if self.deslocamento_x != 0:
             self.movimento_linear(self.deslocamento_x, 0)

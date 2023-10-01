@@ -5,7 +5,7 @@ from classes import*
 def gera_mapas(grid, porta_arg, jogador_arg, zumbis_arg, pizzas_arg, cocas_arg, cracha_arg, porta_imagem):
     paredes = cria_paredes(grid)
     porta = Porta(*porta_arg, porta_imagem)
-    jogador = Jogador(*jogador_arg, porta, paredes, 'player.png')
+    jogador = Jogador(*jogador_arg, porta, paredes, 'player.png',"player esquerdo.png")
     zumbis = []
     for zumbi_arg in zumbis_arg:
         zumbis.append(Zumbi(*zumbi_arg, paredes,'zumbi.png',"tras_personagem.png","frente_personagem.png",porta))
