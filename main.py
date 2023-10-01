@@ -41,7 +41,13 @@ configuracao = {
     "Fim do jogo":False,
     "Ganhou_jogo":False
 }
+som_jogo = pygame.mixer.Sound("musica_jogo.mp3")
+som_jogo.play()
+volume = 1 # ajuste conforme necessário
+som_jogo.set_volume(volume)
 
+# Inicia a reprodução da trilha sonora em loop
+som_jogo.play(loops=-1)
 
 def colisoes(jogador, zumbis, pizzas, cocas, cracha, pizzas_possuidas, vidas):
     # Colisão de zumbi e jogador. Se tem pizza, perde uma das pizzas. Se não, perde uma das vidas, desativa qualquer coca-café em efeito e volta para as coordenadas iniciais. Em qualquer um dos casos, fica invulnerável por 2000 milissegundos
@@ -114,6 +120,7 @@ def ganhou():
     texto_contador = fonte_textos.render("Tela final:", True, BRANCO)
     som_ganhou = pygame.mixer.Sound("ganhou.wav")
     som_ganhou.play()
+    som_jogo.stop()
     background_ganhou = pygame.image.load("ganhou.jpg")
     tamanho_background_ganhou = pygame.transform.scale(background_ganhou,(640, 480))
 
@@ -231,7 +238,7 @@ def historia_1():
         pygame.display.update()
 
 def rodar_jogo(Levels):
-
+    
     continuar = True
     level_atual = 0
     vidas = 3
@@ -247,12 +254,14 @@ def rodar_jogo(Levels):
         cracha = nivel[6]
         print(level_atual)
         print(jogador.passou_de_fase)
+        
         fim_de_nivel = False
         while not fim_de_nivel:
             fonte_contador = pygame.font.Font(None, 20)
             texto_contador = fonte_contador.render("Pizza:" + str(pizzas_possuidas) + "       Vidas:" + str(vidas) + '         Crachá:' + str(jogador.tem_cracha), True, BRANCO)
             pygame.time.delay(50)
             relogio.tick(FPS)
+            
             # Condição de interromper código
             for evento in pygame.event.get():
                 if evento.type == pygame.QUIT:
@@ -278,6 +287,8 @@ def rodar_jogo(Levels):
                        
             if jogador.passou_de_fase and level_atual < 4:
                 level_atual += 1
+                som_porta = pygame.mixer.Sound("som_porta.mp3")
+                som_porta.play()
                 fim_de_nivel = True
 
             JANELA.fill(PRETO)
