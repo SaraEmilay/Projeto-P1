@@ -31,7 +31,7 @@ relogio = pygame.time.Clock()
 FPS = 60
 
 #marcelino
-marcelino=Marcelinho(1*32,2*32, 'marcelinho.jpg')
+marcelino=Marcelinho(1*32,2*32, './imagens/marcelinho.jpg')
 
 #mudança de tela
 configuracao = {
@@ -42,7 +42,7 @@ configuracao = {
     "Fim do jogo":False,
     "Ganhou_jogo":False
 }
-som_jogo = pygame.mixer.Sound("musica_jogo.mp3")
+som_jogo = pygame.mixer.Sound("./sons/musica_jogo.mp3")
 som_jogo.play()
 volume = 1 # ajuste conforme necessário
 som_jogo.set_volume(volume)
@@ -57,7 +57,7 @@ def colisoes(jogador, zumbis, pizzas, cocas, cracha, pizzas_possuidas, vidas):
             if jogador.rect.colliderect(zumbi.rect) and not jogador.invulnerabilidade:
                 jogador.invulnerabilidade = True
                 Jogador.cor = CINZA
-                som_ganhou = pygame.mixer.Sound("colisao.mp3")
+                som_ganhou = pygame.mixer.Sound("./sons/colisao.mp3")
                 som_ganhou.play()
                 # pygame.USEREVENT + n, com n entre 0 e 8. Cria um evento. pygame.time.set_timer(evento, t, loops = 0) é uma função que coloca na fila de eventos o evento dado como argumento, que irá se repetir a cada t milissegundos um número de vezes igual ao número de loops(infinitas, se não der argumento ou for 0)
                 PERDER_INVULNERABILIDADE = pygame.USEREVENT + 0
@@ -73,8 +73,8 @@ def colisoes(jogador, zumbis, pizzas, cocas, cracha, pizzas_possuidas, vidas):
         for pizza in pizzas:
             if jogador.rect.colliderect(pizza.rect) and not pizza.coletada:
                 pizza.coletada = True  # Faz a Pizza desaparecer e não poder ser coletada mais vezes
-                pizzas_possuidas += 1
-                som_ganhou = pygame.mixer.Sound("pegar.mp3")
+                pizzas_possuidas += 30
+                som_ganhou = pygame.mixer.Sound("./sons/pegar.mp3")
                 som_ganhou.play()
 
         # Colisão entre coca café e jogador. Faz os zumbis se moverem com metade da velocidade pelos próximos 10 segundos.
@@ -82,7 +82,7 @@ def colisoes(jogador, zumbis, pizzas, cocas, cracha, pizzas_possuidas, vidas):
             for coca_cafe in cocas:
                 if jogador.rect.colliderect(coca_cafe.rect) and not coca_cafe.coletada:
                     coca_cafe.coletada = True  # Faz a coca_cafe desaparecer e não poder ser coletada mais vezes
-                    som_ganhou = pygame.mixer.Sound("pegar.mp3")
+                    som_ganhou = pygame.mixer.Sound("./sons/pegar.mp3")
                     som_ganhou.play()
                     for zumbi in zumbis:
                         zumbi.velocidade *= 1/2
@@ -92,7 +92,7 @@ def colisoes(jogador, zumbis, pizzas, cocas, cracha, pizzas_possuidas, vidas):
     if jogador.rect.colliderect(cracha.rect) and not cracha.coletada:
             cracha.coletada = True  # Faz o crachá desaparecer e não poder ser coletada mais vezes
             jogador.tem_cracha = True
-            som_ganhou = pygame.mixer.Sound("pegar.mp3")
+            som_ganhou = pygame.mixer.Sound("./sons/pegar.mp3")
             som_ganhou.play()
             
     return pizzas_possuidas, vidas
@@ -117,10 +117,10 @@ def reiniciar(jogador, zumbis, pizzas, cocas, cracha):
 def ganhou():
     global configuracao
     
-    som_ganhou = pygame.mixer.Sound("ganhou.wav")
+    som_ganhou = pygame.mixer.Sound("./sons/ganhou.wav")
     som_ganhou.play()
     som_jogo.stop()
-    background_ganhou = pygame.image.load("tela_final jogo.jpg")
+    background_ganhou = pygame.image.load("./imagens/tela_final jogo.jpg")
     tamanho_background_ganhou = pygame.transform.scale(background_ganhou,(640, 480))
 
 
@@ -155,7 +155,7 @@ def ganhou():
 def menu_inicial():
 
     global configuracao
-    background_menu_inicial = pygame.image.load("tela_inicial jogo.jpg")
+    background_menu_inicial = pygame.image.load("./imagens/tela_inicial jogo.jpg")
     tamanho_background_menu_incial = pygame.transform.scale(background_menu_inicial,(640, 480))
 
     m_rodando = True
@@ -183,7 +183,7 @@ def menu_inicial():
 
 def creditos():
     global configuracao
-    background_creditos = pygame.image.load("tela_creditos jogo.jpg")
+    background_creditos = pygame.image.load("./imagens/tela_creditos jogo.jpg")
     tamanho_background_creditos = pygame.transform.scale(background_creditos, (640, 480))
     m_rodando = True
     
@@ -207,7 +207,7 @@ def creditos():
 
 def historia_1():
     global configuracao
-    background_historia = pygame.image.load("tela_historia jogo.jpg")
+    background_historia = pygame.image.load("./imagens/tela_historia jogo.jpg")
     tamanho_background_historia = pygame.transform.scale(background_historia,(640, 480))
     m_rodando = True
     
@@ -278,7 +278,7 @@ def rodar_jogo(Levels):
                        
             if jogador.passou_de_fase and level_atual < 4:
                 level_atual += 1
-                som_porta = pygame.mixer.Sound("som_porta.mp3")
+                som_porta = pygame.mixer.Sound("./sons/som_porta.mp3")
                 som_porta.play()
                 fim_de_nivel = True
 
@@ -337,11 +337,11 @@ def rodar_jogo(Levels):
                     configuracao["jogo_iniciado"]=False
                     configuracao["Fim do jogo"]=True
                     pygame.quit()
-                botao_menu =pygame.image.load("menu_inicial_botao.png")
+                botao_menu =pygame.image.load("./imagens/menu_inicial_botao.png")
                 botao_imagem_1 = pygame.transform.scale(botao_menu, (180, 160))
                 JANELA.blit(botao_imagem_1, (100, 180))   
 
-                botao_encerrar =pygame.image.load("fecar_jogo_botao.png")
+                botao_encerrar =pygame.image.load("./imagens/fecar_jogo_botao.png")
                 botao_imagem_2 = pygame.transform.scale(botao_encerrar, (180, 160))
                 JANELA.blit(botao_imagem_2, (360, 180))  
 

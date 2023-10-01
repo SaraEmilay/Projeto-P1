@@ -19,7 +19,7 @@ class Jogador():
         self.tem_cracha = False
         self.saida = saida
         self.passou_de_fase = False
-        self.carrega_imagem =pygame.image.load(imagem)
+        self.carrega_imagem = pygame.image.load(imagem)
         self.imagem = pygame.transform.scale(self.carrega_imagem, (20, 20))
 
 
