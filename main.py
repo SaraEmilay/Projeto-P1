@@ -14,13 +14,14 @@ pygame.init()
 LARGURA, ALTURA = 640, 480
 #criando botoes
 
-botao_credito=Botao("Créditos", 150,64, 155,275)
-botao_jogar=Botao("Jogar", 150,64, 340,275 )
-botao_historia=Botao("Jogar", 192,64, 416,384)
-botao_voltar_menu=Botao("Voltar para o Menu", 150,64, 240,390) #Volta para o Menu após os créditos
-botao_reiniciar=Botao("Jogar de novo", 192,64, 80,208) #Volta para tela inicial após o player perder todas as vidas
-botao_fim=Botao("Encerrar jogo", 192,64, 368,208) #Opção de fechar a tela após o player perder todas as vidas
-botao_menu_ganhou=Botao("Voltar para o Menu", 192,64, 80,208) #Opção de jogar novamente após o player vencer o jogo
+botao_credito=Botao("Créditos", 150, 64, 155, 275)
+botao_jogar=Botao("Jogar", 150, 64, 340, 275 )
+botao_historia=Botao("Jogar", 150, 64, 255, 380)
+botao_voltar_menu=Botao("Voltar Menu", 150, 64, 240, 390) #Volta para o Menu após os créditos  
+botao_reiniciar=Botao("Jogar de novo", 150, 64, 115, 220) #Volta para tela inicial após o player perder todas as vidas
+botao_fim=Botao("Encerrar jogo", 150, 64, 370, 220) #Opção de fechar a tela após o player perder todas as vidas    
+botao_menu_ganhou=Botao("Voltar Menu", 150, 64, 145, 275) #Opção de jogar novamente após o player vencer o jogo
+botao_encerrar_ganhou=Botao("Encerrar jogo", 150, 64, 330, 275)#Opção de fechar a tela após o player vencer o jogo
 
 # Define o título da JANELA e estabelece a taxa de quadros por segundo.
 pygame.display.set_caption("O resgate de Marcelinho")
@@ -129,7 +130,7 @@ def ganhou():
             m_rodando = False
             configuracao["Ganhou_jogo"]=False
             configuracao["Menu_Inicial"]=True
-        if botao_fim.draw():
+        if botao_encerrar_ganhou.draw():
             m_rodando = False
             configuracao["Ganhou_jogo"]=False
             configuracao["Fim do jogo"]=True
@@ -140,6 +141,7 @@ def ganhou():
                 m_rodando = False
 
                 pygame.quit()
+        JANELA.blit(tamanho_background_ganhou, (0, 0))
         pygame.display.update()
 
 
@@ -225,7 +227,7 @@ def historia_1():
 
                 pygame.quit()
 
-
+        JANELA.blit(tamanho_background_historia, (0, 0))
         pygame.display.update()
 
 def rodar_jogo(Levels):

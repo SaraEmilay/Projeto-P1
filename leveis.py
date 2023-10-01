@@ -34,7 +34,7 @@ def cria_paredes(grid):
 
 grid_1=[
     'PPPPPPPPPPPPPPPPPPPP',
-    'P------------------P',
+    'P-------------------',
     'P-PPPPPPP--PPPPPPP-P',
     'P-P--------------P-P',
     'P-P-PPPP----PPPP-P-P',
@@ -50,7 +50,7 @@ grid_1=[
     'PPPPPPPPPPPPPPPPPPPP'
 ]
 
-porta_1 = (18*32,1*32)
+porta_1 = (19*32,1*32)
 jogador_coord_init_1 = (1*32, 13*32)  #x_inicial, y_inicial,
 jogador_1 = (jogador_coord_init_1, 10)  # coordenadas e velocidade
 
@@ -112,7 +112,7 @@ mapa_2 = (grid_2, porta_2, jogador_2, zumbis_2, pizzas_2, cocas_2,cracha_2,marce
 
 grid_3=[
     'PPPPPPPPPPPPPPPPPPPP',
-    'P-----------P------P',
+    'P-----------P-------',
     'PPPP--PPP---P----PPP',
     'P-----P-P---P----P-P',
     'P-PPPPP-P---P----P-P',
@@ -128,7 +128,7 @@ grid_3=[
     'PPPPPPPPPPPPPPPPPPPP'
 ]
 
-porta_3 = (18*32,1*32)
+porta_3 = (19*32,1*32)
 jogador_coord_init_3 = [18*32, 4*32]  #x_inicial, y_inicial,
 jogador_3 = (jogador_coord_init_3, 10)  # coordenadas e velocidade
 zumbis_3 = [(3*32, 12*32, True, False, -1, 1),
