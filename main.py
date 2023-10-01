@@ -17,7 +17,7 @@ LARGURA, ALTURA = 640, 480
 botao_credito=Botao("Créditos", 150,64, 155,275)
 botao_jogar=Botao("Jogar", 150,64, 340,275 )
 botao_historia=Botao("Jogar", 192,64, 416,384)
-botao_voltar_menu=Botao("Voltar para o Menu", 250,64, 64,384) #Volta para o Menu após os créditos
+botao_voltar_menu=Botao("Voltar para o Menu", 150,64, 240,390) #Volta para o Menu após os créditos
 botao_reiniciar=Botao("Jogar de novo", 192,64, 80,208) #Volta para tela inicial após o player perder todas as vidas
 botao_fim=Botao("Encerrar jogo", 192,64, 368,208) #Opção de fechar a tela após o player perder todas as vidas
 botao_menu_ganhou=Botao("Voltar para o Menu", 192,64, 80,208) #Opção de jogar novamente após o player vencer o jogo
@@ -184,20 +184,21 @@ def creditos():
     m_rodando = True
     
     while m_rodando:
+
         pygame.time.delay(50)
         relogio.tick(FPS)
         if botao_voltar_menu.draw():
             m_rodando = False
             configuracao["creditos"]=False
             configuracao["Menu_Inicial"]= True
-        JANELA.blit(tamanho_background_creditos,(0,0))
+
 
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:  
                 m_rodando = False
 
                 pygame.quit()
-
+        JANELA.blit(tamanho_background_creditos, (0, 0))
         pygame.display.update()
 
 def historia_1():
