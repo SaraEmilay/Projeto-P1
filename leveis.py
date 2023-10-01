@@ -1,23 +1,23 @@
 from classes import*
 
-marcelino=Marcelinho(1*32,1*32)
+marcelino=Marcelinho(1*32, 1*32, 'marcelinho.jpg')
 
 
 def gera_mapas(grid, porta_arg, jogador_arg, zumbis_arg, pizzas_arg, cocas_arg, cracha_arg,marcelin):
     paredes = cria_paredes(grid)
-    porta = Porta(*porta_arg)
-    jogador = Jogador(*jogador_arg, porta, paredes,marcelin)
+    porta = Porta(*porta_arg, 'porta.jpg')
+    jogador = Jogador(*jogador_arg, porta, paredes,marcelin, 'player.jpg')
     zumbis = []
     for zumbi_arg in zumbis_arg:
-        zumbis.append(Zumbi(*zumbi_arg, paredes))
+        zumbis.append(Zumbi(*zumbi_arg, paredes,'zumbi.jpg'))
     pizzas = []
     for pizza_arg in pizzas_arg:
-        pizzas.append(Pizza(*pizza_arg))
+        pizzas.append(Pizza(*pizza_arg, 'pizza.jpg'))
     cocas = []
     if len(cocas_arg) > 0:
         for coca_arg in cocas_arg:
-            cocas.append(Coca_cafe(*coca_arg))
-    cracha = Cracha(*cracha_arg)
+            cocas.append(Coca_cafe(*coca_arg, 'coca.jpg'))
+    cracha = Cracha(*cracha_arg, 'cracha.jpg')
     return (paredes, porta, jogador, zumbis, pizzas, cocas, cracha)
 def cria_paredes(grid):
         paredes = []
@@ -25,7 +25,7 @@ def cria_paredes(grid):
         for linha in grid:
             for coluna in linha:
                 if coluna =='P':
-                    paredes.append(Parede((x,y)))
+                    paredes.append(Parede((x,y), 'parede.jpg'))
                 x+=32
             y+=32
             x=0

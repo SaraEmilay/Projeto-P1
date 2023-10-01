@@ -29,7 +29,7 @@ relogio = pygame.time.Clock()
 FPS = 60
 
 #marcelino
-marcelino=Marcelinho(1*32,1*32)
+marcelino=Marcelinho(1*32,1*32, 'marcelinho.jpg')
 
 #mudança de tela
 configuracao = {
@@ -233,7 +233,7 @@ def rodar_jogo(Levels):
     continuar = True
     level_atual = 0
     vidas = 3
-    pizzas_possuidas = 30
+    pizzas_possuidas = 0
     while continuar: 
         nivel = gera_mapas(*Levels[level_atual])
         paredes = nivel[0]
@@ -280,30 +280,41 @@ def rodar_jogo(Levels):
 
             JANELA.fill(PRETO)
             for parede in paredes:
-                pygame.draw.rect(JANELA,(80,9,200), parede.rect)
+                #pygame.draw.rect(JANELA,(80,9,200), parede.rect)
+                parede.desenhar(JANELA)
             for zumbi in zumbis:
-                pygame.draw.rect(JANELA, Zumbi.cor, zumbi.rect)  # quadrado verde-zumbi
+                #pygame.draw.rect(JANELA, Zumbi.cor, zumbi.rect)  # quadrado verde-zumbi
+                zumbi.desenhar(JANELA)
             if level_atual <4 and not cracha.coletada:
-                pygame.draw.rect(JANELA, porta.cor, porta.rect)
+                #pygame.draw.rect(JANELA, porta.cor, porta.rect)
+                porta.desenhar(JANELA)
             elif level_atual <4 and  cracha.coletada:
-                    pygame.draw.rect(JANELA, VERDE, porta.rect)
+                #pygame.draw.rect(JANELA, VERDE, porta.rect)
+                porta.desenhar(JANELA)
             elif level_atual ==4 and  not cracha.coletada:
-                pygame.draw.rect(JANELA, porta.cor, porta.rect)
+                #pygame.draw.rect(JANELA, porta.cor, porta.rect)
+                porta.desenhar(JANELA)
             
                     
             if len(cocas) != 0:
                 for coca_cafe in cocas:
                     if not coca_cafe.coletada:
-                        pygame.draw.rect(JANELA, Coca_cafe.cor, coca_cafe.rect)  # retangulo marrom
+                        #pygame.draw.coca_cafe()
+                        coca_cafe.desenhar(JANELA)
             for pizza in pizzas:
                 if not pizza.coletada:
-                    pygame.draw.rect(JANELA, Pizza.cor, pizza.rect)  # retângulo pizza
+                    #pygame.draw.rect(JANELA, Pizza.cor, pizza.rect)  # retângulo pizza
+                    pizza.desenhar(JANELA)
             if not cracha.coletada:
-                pygame.draw.rect(JANELA,Cracha.cor, cracha.rect)
-            pygame.draw.rect(JANELA, (Jogador.cor), jogador.rect)  # JANELA, cor, tamanho
+                #pygame.draw.rect(JANELA,Cracha.cor, cracha.rect)
+                cracha.desenhar(JANELA)
+
+            #pygame.draw.rect(JANELA, (Jogador.cor), jogador.rect)  # JANELA, cor, tamanho
+            jogador.desenhar(JANELA)
 
             if level_atual==4:
-                pygame.draw.rect(JANELA, (Marcelinho.cor), marcelino.rect)
+                #pygame.draw.rect(JANELA, (Marcelinho.cor), marcelino.rect)
+                marcelino.desenhar(JANELA)
                 if jogador.rect.colliderect(marcelino.rect):
                     continuar = False
                     fim_de_nivel = True

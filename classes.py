@@ -5,10 +5,10 @@ pygame.init()
 
 
 # Classe do Jogador, com único método movimento e movimento linear.
-class Jogador:
+class Jogador():
     cor = (255, 255, 255)
 
-    def __init__(self, coordenadas, velocidade, saida, Paredes, marcelinho, vidas=3):
+    def __init__(self, coordenadas, velocidade, saida, Paredes, marcelinho, imagem, vidas=3):
         self.rect = pygame.Rect(*coordenadas, 18, 18)
         self.Paredes = Paredes
         self.x_inicial = coordenadas[0]
@@ -20,6 +20,9 @@ class Jogador:
         self.saida = saida
         self.passou_de_fase = False
         self.marcelin = marcelinho
+        self.carrega_imagem =pygame.image.load(imagem)
+        self.imagem = pygame.transform.scale(self.carrega_imagem, (20, 20))
+
 
     # Primeiramente, avalia qual a direção do movimento em x e em y. Então, chama um método que lida com o movimento unidirecional duas vezes: Uma apenas para x e uma apenas para y.
     def movimento(self, comandos, LARGURA, ALTURA):
@@ -68,13 +71,16 @@ class Jogador:
         elif self.rect.colliderect(self.saida.rect) and self.tem_cracha:
             self.passou_de_fase = True
 
+    def desenhar(self, janela):
+        janela.blit(self.imagem, (self.rect.x, self.rect.y))
+
 
 # Classe dos Zumbis. Possui como método o movimento.
-class Zumbi:
+class Zumbi():
     cor = (70, 109, 67)
 
     # As variáveis x e y iniciais são usadas para criação do retângulo e como coordenadas padrão para onde os zumbis voltarão dps do fim de jogo. Os movimentos são booleanas que avaliam se deve se mover nessa direção(temporário) e as direção(sentido seria mais apropriado?) definem se se movem para um lado ou para o outro.
-    def __init__(self, x_inicial, y_inicial, movimento_x, movimento_y, direcao_x, direcao_y, Paredes):
+    def __init__(self, x_inicial, y_inicial, movimento_x, movimento_y, direcao_x, direcao_y, Paredes, imagem):
         self.rect = pygame.Rect(x_inicial, y_inicial, 32, 32)
         self.Paredes = Paredes
         self.x_inicial = x_inicial
@@ -85,6 +91,8 @@ class Zumbi:
         self.direcao_y = direcao_y
         self.velocidade_base = 10
         self.velocidade = 10
+        self.carrega_imagem =pygame.image.load(imagem)
+        self.imagem = pygame.transform.scale(self.carrega_imagem, (32, 32))
 
     # Antes de movimentar, checa se a instância possui movimento na determinada direção. No futuro será substituído por movimento em rotas.
     def movimento(self, LARGURA, ALTURA):
@@ -108,31 +116,47 @@ class Zumbi:
                     self.direcao_x *= -1
                     self.direcao_y *= -1
 
+    def desenhar(self, janela):
+        janela.blit(self.imagem, (self.rect.x, self.rect.y))
+
 
 # Classe das Pizzas, self.coletada serve para garantir que os efeitos de coleta e a impressão só ocorram se a pizza não tiver sido coletada.
-class Pizza:
+class Pizza():
     cor = (212, 155, 23)
 
-    def __init__(self, x_inicial, y_inicial, coletada=False):
+    def __init__(self, x_inicial, y_inicial, imagem, coletada=False):
         self.rect = pygame.Rect(x_inicial, y_inicial, 15, 15)
         self.coletada = coletada
+        self.carrega_imagem =pygame.image.load(imagem)
+        self.imagem = pygame.transform.scale(self.carrega_imagem, (15, 15))
 
+    def desenhar(self, janela):
+        janela.blit(self.imagem, (self.rect.x, self.rect.y))
 
 class Marcelinho:
     cor = (12, 155, 23)
 
-    def __init__(self, x_inicial, y_inicial, coletada=False):
+    def __init__(self, x_inicial, y_inicial, imagem, coletada=False):
         self.rect = pygame.Rect(x_inicial, y_inicial, 20, 20)
         self.coletada = coletada
+        self.carrega_imagem =pygame.image.load(imagem)
+        self.imagem = pygame.transform.scale(self.carrega_imagem, (20, 20))
 
+    def desenhar(self, janela):
+        janela.blit(self.imagem, (self.rect.x, self.rect.y))
 
 # Classe das Coca_cafe, idêntica a pizza.
-class Coca_cafe:
+class Coca_cafe():
     cor = (111, 78, 55)
 
-    def __init__(self, x_inicial, y_inicial, coletada=False):
+    def __init__(self, x_inicial, y_inicial, imagem, coletada=False):
         self.rect = pygame.Rect(x_inicial, y_inicial, 10, 10)
         self.coletada = coletada
+        self.carrega_imagem =pygame.image.load(imagem)
+        self.imagem = pygame.transform.scale(self.carrega_imagem, (10, 10))
+
+    def desenhar(self, janela):
+        janela.blit(self.imagem, (self.rect.x, self.rect.y))
 
 
 # Classe das paredes, cria quadrados de parede onde apropriado, seguindo a grid. Quando formos criar as fases, cada fase irá chamar essa classe e produzir sua própria lista [] iterável, fora do arquivo de classes.
@@ -140,26 +164,41 @@ class Parede(object):
     paredes = []
     cor = (100, 217, 65)
 
-    def __init__(self, posicao):
+    def __init__(self, posicao, imagem):
         Parede.paredes.append(self)
         self.rect = pygame.Rect(posicao[0], posicao[1], 32, 32)
+        self.carrega_imagem =pygame.image.load(imagem)
+        self.imagem = pygame.transform.scale(self.carrega_imagem, (32, 32))
+
+    def desenhar(self, janela):
+        janela.blit(self.imagem, (self.rect.x, self.rect.y))
 
 
 # Classe do Crachá, igual a pizza.
-class Cracha:
+class Cracha():
     cor = (0, 255, 0)
 
-    def __init__(self, x_inicial, y_inicial, coletada=False):
+    def __init__(self, x_inicial, y_inicial, imagem, coletada=False):
         self.rect = pygame.Rect(x_inicial, y_inicial, 12, 12)
         self.coletada = coletada
+        self.carrega_imagem =pygame.image.load(imagem)
+        self.imagem = pygame.transform.scale(self.carrega_imagem, (12, 12))
+
+    def desenhar(self, janela):
+        janela.blit(self.imagem, (self.rect.x, self.rect.y))
 
 
 
-class Porta:
+class Porta():
     cor = (255, 0, 0)
 
-    def __init__(self, x, y):
+    def __init__(self, x, y, imagem):
         self.rect = pygame.Rect(x, y, 32, 32)
+        self.carrega_imagem =pygame.image.load(imagem)
+        self.imagem = pygame.transform.scale(self.carrega_imagem, (32, 32))
+
+    def desenhar(self, janela):
+        janela.blit(self.imagem, (self.rect.x, self.rect.y))
 
 
 LARGURA, ALTURA = 640, 480
