@@ -51,7 +51,7 @@ grid_1=[
 ]
 
 
-porta_1 = (18*32,1*32)
+porta_1 = (19*32,1*32)
 porta_imagem_padrao = 'porta.jpg'
 jogador_coord_init_1 = (1*32, 13*32)  #x_inicial, y_inicial,
 jogador_1 = (jogador_coord_init_1, 10)  # coordenadas e velocidade
@@ -202,7 +202,7 @@ grid_5=[
 ]
 
 porta5 = (3*32,2*32)
-grade_imagem = 'grade.jpg'
+#grade_imagem = pygame.image.load('porta_marcelinho.avif')
 jogador_coord_init5 = [13*32, 4*32]  #x_inicial, y_inicial,
 jogador5 =(jogador_coord_init5, 10,)  # coordenadas e velocidade
 zumbis5 = [(6*32, 1*32,True,False,-1,1),
@@ -220,7 +220,7 @@ zumbis5 = [(6*32, 1*32,True,False,-1,1),
 pizzas5 = [(7*32+8, 9*32+8),(16*32+8, 5*32+8),(16*32+8, 12*32+8), (11*32+8, 9*32+8)]
 cocas5 = [(10*32+8, 11*32+8)]
 cracha5 = (8*32+8, 5*32+8)
-mapa_5 = (grid_5, porta5, jogador5, zumbis5, pizzas5, cocas5, cracha5,marcelino, grade_imagem)
+mapa_5 = (grid_5, porta5, jogador5, zumbis5, pizzas5, cocas5, cracha5,marcelino, porta_imagem_padrao)
 
 
 Levels = (mapa_1,mapa_2,mapa_3,mapa_4,mapa_5)

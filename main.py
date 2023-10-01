@@ -67,7 +67,7 @@ def colisoes(jogador, zumbis, pizzas, cocas, cracha, pizzas_possuidas, vidas):
         for pizza in pizzas:
             if jogador.rect.colliderect(pizza.rect) and not pizza.coletada:
                 pizza.coletada = True  # Faz a Pizza desaparecer e não poder ser coletada mais vezes
-                pizzas_possuidas += 1
+                pizzas_possuidas += 30
                 som_ganhou = pygame.mixer.Sound("pegar.mp3")
                 som_ganhou.play()
 
