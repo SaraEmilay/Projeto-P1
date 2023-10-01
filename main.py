@@ -49,6 +49,8 @@ def colisoes(jogador, zumbis, pizzas, cocas, cracha, pizzas_possuidas, vidas):
             if jogador.rect.colliderect(zumbi.rect) and not jogador.invulnerabilidade:
                 jogador.invulnerabilidade = True
                 Jogador.cor = CINZA
+                som_ganhou = pygame.mixer.Sound("colisao.mp3")
+                som_ganhou.play()
                 # pygame.USEREVENT + n, com n entre 0 e 8. Cria um evento. pygame.time.set_timer(evento, t, loops = 0) é uma função que coloca na fila de eventos o evento dado como argumento, que irá se repetir a cada t milissegundos um número de vezes igual ao número de loops(infinitas, se não der argumento ou for 0)
                 PERDER_INVULNERABILIDADE = pygame.USEREVENT + 0
                 pygame.time.set_timer(PERDER_INVULNERABILIDADE, 2000, 1)
@@ -65,18 +67,26 @@ def colisoes(jogador, zumbis, pizzas, cocas, cracha, pizzas_possuidas, vidas):
             if jogador.rect.colliderect(pizza.rect) and not pizza.coletada:
                 pizza.coletada = True  # Faz a Pizza desaparecer e não poder ser coletada mais vezes
                 pizzas_possuidas += 1
+                som_ganhou = pygame.mixer.Sound("pegar.mp3")
+                som_ganhou.play()
+
         # Colisão entre coca café e jogador. Faz os zumbis se moverem com metade da velocidade pelos próximos 10 segundos.
         if len(cocas) != 0:
             for coca_cafe in cocas:
                 if jogador.rect.colliderect(coca_cafe.rect) and not coca_cafe.coletada:
                     coca_cafe.coletada = True  # Faz a coca_cafe desaparecer e não poder ser coletada mais vezes
+                    som_ganhou = pygame.mixer.Sound("pegar.mp3")
+                    som_ganhou.play()
                     for zumbi in zumbis:
                         zumbi.velocidade *= 1/2
                     FIM_DO_BONUS = pygame.USEREVENT + 1
                     pygame.time.set_timer(FIM_DO_BONUS, 10000, 1)
+
     if jogador.rect.colliderect(cracha.rect) and not cracha.coletada:
             cracha.coletada = True  # Faz o crachá desaparecer e não poder ser coletada mais vezes
             jogador.tem_cracha = True
+            som_ganhou = pygame.mixer.Sound("pegar.mp3")
+            som_ganhou.play()
             
     return pizzas_possuidas, vidas
 
