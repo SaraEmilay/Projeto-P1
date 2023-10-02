@@ -47,12 +47,8 @@ configuracao = {
     "Ganhou jogo":False
 }
 som_jogo = pygame.mixer.Sound("./sons/musica_jogo.mp3")
-som_jogo.play()
 volume = 0.5 # Ajuste conforme necessário
 som_jogo.set_volume(volume)
-
-#Inicia a reprodução da trilha sonora em loop
-som_jogo.play(loops=-1)
 
 def colisoes(jogador, zumbis, pizzas, cocas, cracha, pizzas_possuidas, vidas):
     #Colisão de zumbi e jogador:
@@ -175,10 +171,11 @@ def ganhou():
 
 #Tela inicial: botões de créditos e início do jogo
 def menu_inicial():
-
     global configuracao
     background_menu_inicial = pygame.image.load("./imagens/telas/tela_inicial jogo.jpg")
     tamanho_background_menu_incial = pygame.transform.scale(background_menu_inicial,(640, 480))
+    #Inicia a reprodução da trilha sonora em loop
+    som_jogo.play(loops=-1)
 
     menu_final_rodando = True
     
@@ -263,7 +260,6 @@ def historia():
 
 #Função mestre: Constrói os mapas e os objetos dentro dele
 def rodar_jogo(Levels):
-
     continuar = True
     level_atual = 0  
     vidas = 3
