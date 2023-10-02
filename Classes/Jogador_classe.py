@@ -10,7 +10,7 @@ class Jogador():
         self.velocidade = velocidade
         self.vidas = vidas
         self.invulnerabilidade = False
-        self.tem_cracha = False
+        self.tem_cracha = 0 
         self.saida = saida
         self.passou_de_fase = False
         self.carrega_imagem = pygame.image.load(imagem)

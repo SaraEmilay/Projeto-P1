@@ -46,19 +46,25 @@ class Zumbi():
     def colisao(self, paredes):
         for parede in paredes:
             if self.rect.colliderect(parede.rect):
-                if self.mov_x:
+                if self.mov_x : 
+                    if self.direcao_x == 1:
+                        self.rect.right = parede.rect.left - 1 
+                    elif self.direcao_x == -1:
+                        self.rect.left = parede.rect.right + 1
                     self.direcao_x *= -1
-                    self.imagem = pygame.transform.flip(self.imagem, True, False)
-
-                if self.mov_y:
-                    self.direcao_y *= -1
-                    if self.direcao_y == -1:
-                        self.carrega_imagem = pygame.image.load(self.imagem_tras)
+                    self.imagem=pygame.transform.flip(self.imagem, True, False)
+                    
+                if self.mov_y:   
+                    self.direcao_y *= -1  
+                    if self.direcao_y==-1:
+                        self.rect.bottom = parede.rect.top - 1
+                        self.carrega_imagem =pygame.image.load(self.imagem_tras)
                         self.imagem = pygame.transform.scale(self.carrega_imagem, (32, 32))
-                    elif self.direcao_y == 1:
-                        self.carrega_imagem = pygame.image.load(self.imagem_frente)
+                    elif self.direcao_y==1:
+                        self.rect.top = parede.rect.bottom + 1
+                        self.carrega_imagem =pygame.image.load(self.imagem_frente)
                         self.imagem = pygame.transform.scale(self.carrega_imagem, (32, 32))
-
+                        
         if self.rect.colliderect(self.saida.rect):
             if self.mov_x:
                 self.direcao_x *= -1

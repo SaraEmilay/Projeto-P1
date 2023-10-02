@@ -80,7 +80,7 @@ def colisoes(jogador, zumbis, pizzas, cocas, cracha, pizzas_possuidas, vidas):
         for pizza in pizzas:
             if jogador.rect.colliderect(pizza.rect) and not pizza.coletada:
                 pizza.coletada = True  # Faz a Pizza desaparecer e não poder ser coletada mais vezes
-                pizzas_possuidas += 30
+                pizzas_possuidas += 1
                 som_ganhou = pygame.mixer.Sound("./sons/pegar.mp3")
                 som_ganhou.play()
 
@@ -98,7 +98,7 @@ def colisoes(jogador, zumbis, pizzas, cocas, cracha, pizzas_possuidas, vidas):
 
     if jogador.rect.colliderect(cracha.rect) and not cracha.coletada:
             cracha.coletada = True  # Faz o crachá desaparecer e não poder ser coletada mais vezes
-            jogador.tem_cracha = True
+            jogador.tem_cracha = 1
             som_ganhou = pygame.mixer.Sound("./sons/pegar.mp3")
             som_ganhou.play()
             
@@ -111,7 +111,7 @@ def reiniciar(jogador, zumbis, pizzas, cocas, cracha):
     Jogador.cor = BRANCO
     vidas = 3
     jogador.velocidade = 10
-    jogador.tem_cracha = False
+    jogador.tem_cracha = 0
     cracha.coletada = False
     for zumbi in zumbis:
         zumbi.rect.x, zumbi.rect.y = zumbi.x_inicial, zumbi.y_inicial
@@ -252,8 +252,6 @@ def rodar_jogo(Levels):
         pizzas = nivel[4]
         cocas = nivel[5]
         cracha = nivel[6]
-        print(level_atual)
-        print(jogador.passou_de_fase)
         fim_de_nivel = False
         while not fim_de_nivel:
             fonte_contador = pygame.font.Font(None, 20)
