@@ -35,7 +35,7 @@ relogio = pygame.time.Clock()
 FPS = 60
 
 #Marcelino
-marcelino=Marcelinho(1*32,2*32, './imagens/marcelinho.jpg')
+marcelino=Marcelinho(1*32,2*32, './imagens/personagens/marcelinho.jpg')
 
 #Mudanças de tela
 configuracao = {
@@ -141,7 +141,7 @@ def ganhou():
     som_ganhou = pygame.mixer.Sound("./sons/ganhou.wav")
     som_ganhou.play()
     som_jogo.stop()
-    background_ganhou = pygame.image.load("./imagens/tela_final jogo.jpg")
+    background_ganhou = pygame.image.load("./imagens/telas/tela_final jogo.jpg")
     tamanho_background_ganhou = pygame.transform.scale(background_ganhou,(640, 480))
 
     #Tela final do jogo incluindo funcionamento dos botões e sobreposição do design estática da tela
@@ -177,7 +177,7 @@ def ganhou():
 def menu_inicial():
 
     global configuracao
-    background_menu_inicial = pygame.image.load("./imagens/tela_inicial jogo.jpg")
+    background_menu_inicial = pygame.image.load("./imagens/telas/tela_inicial jogo.jpg")
     tamanho_background_menu_incial = pygame.transform.scale(background_menu_inicial,(640, 480))
 
     menu_final_rodando = True
@@ -210,7 +210,7 @@ def menu_inicial():
 def creditos():
 
     global configuracao
-    background_creditos = pygame.image.load("./imagens/tela_creditos jogo.jpg")
+    background_creditos = pygame.image.load("./imagens/telas/tela_creditos jogo.jpg")
     tamanho_background_creditos = pygame.transform.scale(background_creditos, (640, 480))
     menu_final_rodando = True
     
@@ -237,7 +237,7 @@ def creditos():
 def historia():
     
     global configuracao
-    background_historia = pygame.image.load("./imagens/tela_historia jogo.jpg")
+    background_historia = pygame.image.load("./imagens/telas/tela_historia jogo.jpg")
     tamanho_background_historia = pygame.transform.scale(background_historia,(640, 480))
     menu_final_rodando = True
     
@@ -265,7 +265,7 @@ def historia():
 def rodar_jogo(Levels):
 
     continuar = True
-    level_atual = 0
+    level_atual = 0  
     vidas = 3
     pizzas_possuidas = 0
 
@@ -387,10 +387,10 @@ def rodar_jogo(Levels):
                     configuracao["Fim do jogo"]=True
                     pygame.quit()
 
-                botao_menu = pygame.transform.scale(pygame.image.load("./imagens/menu_inicial_botao.png"), (180, 160))
+                botao_menu = pygame.transform.scale(pygame.image.load("./imagens/telas/menu_inicial_botao.png"), (180, 160))
                 JANELA.blit(botao_menu, (100, 180))   
 
-                botao_encerrar = pygame.transform.scale(pygame.image.load("./imagens/fecar_jogo_botao.png"), (180, 160))
+                botao_encerrar = pygame.transform.scale(pygame.image.load("./imagens/telas/fechar_jogo_botao.png"), (180, 160))
                 JANELA.blit(botao_encerrar, (360, 180)) 
 
             JANELA.blit(texto_contador, [32, 32])

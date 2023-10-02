@@ -9,28 +9,28 @@ from Classes.Marcelinho_classe import Marcelinho
 from Classes.Zumbi_classe import Zumbi
 
 
-porta_imagem_padrao = './imagens/porta.jpg'
-porta_marcelinho_imagem = './imagens/porta_marcelinho.jpg'
+porta_imagem_padrao = './imagens/mapas/porta.jpg'
+porta_marcelinho_imagem = './imagens/mapas/porta_marcelinho.jpg'
 
 def gera_mapas(grid, porta_arg, jogador_arg, zumbis_arg, pizzas_arg, cocas_arg, cracha_arg, porta_imagem):
 
     paredes = cria_paredes(grid)
     porta = Porta(*porta_arg, porta_imagem)
-    jogador = Jogador(*jogador_arg, porta, paredes, './imagens/player.png')
+    jogador = Jogador(*jogador_arg, porta, paredes, './imagens/personagens/player.png')
     zumbis = []
 
     for zumbi_arg in zumbis_arg:
-        zumbis.append(Zumbi(*zumbi_arg, paredes,'./imagens/zumbi.png',"./imagens/tras_personagem.png","./imagens/frente_personagem.png",porta))
+        zumbis.append(Zumbi(*zumbi_arg, paredes,'./imagens/personagens/zumbi.png',"./imagens/personagens/tras_personagem.png","./imagens/personagens/frente_personagem.png",porta))
     pizzas = []
     
     for pizza_arg in pizzas_arg:
-        pizzas.append(Pizza(*pizza_arg, './imagens/pizza.png'))
+        pizzas.append(Pizza(*pizza_arg, './imagens/coletaveis/pizza.png'))
     cocas = []
     
     if len(cocas_arg) > 0:
         for coca_arg in cocas_arg:
-            cocas.append(Coca_cafe(*coca_arg, './imagens/coca.png'))
-    cracha = Cracha(*cracha_arg, './imagens/cracha.png')
+            cocas.append(Coca_cafe(*coca_arg, './imagens/coletaveis/coca.png'))
+    cracha = Cracha(*cracha_arg, './imagens/coletaveis/cracha.png')
     
     return (paredes, porta, jogador, zumbis, pizzas, cocas, cracha)
 
@@ -44,7 +44,7 @@ def cria_paredes(grid):
             for coluna in linha:
                 
                 if coluna =='P':
-                    paredes.append(Parede((x,y), './imagens/parede.jpg'))
+                    paredes.append(Parede((x,y), './imagens/mapas/parede.jpg'))
                 x+=32
             y+=32
             x=0
