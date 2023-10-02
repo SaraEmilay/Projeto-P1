@@ -1,5 +1,4 @@
 import pygame
-#from classes import *
 from leveis import Levels, gera_mapas
 from Classes.Botão_classe import Botao
 from Classes.Cracha_classe import Cracha
@@ -62,14 +61,15 @@ def colisoes(jogador, zumbis, pizzas, cocas, cracha, pizzas_possuidas, vidas):
     if vidas>0:
         for zumbi in zumbis:
             if jogador.rect.colliderect(zumbi.rect) and not jogador.invulnerabilidade:
-                jogador.invulnerabilidade = True
                 Jogador.cor = CINZA
                 som_ganhou = pygame.mixer.Sound("./sons/colisao.mp3")
                 som_ganhou.play()
-                # pygame.USEREVENT + n, com n entre 0 e 8. Cria um evento. pygame.time.set_timer(evento, t, loops = 0) é uma função que coloca na fila de eventos o evento dado como argumento, que irá se repetir a cada t milissegundos um número de vezes igual ao número de loops(infinitas, se não der argumento ou for 0)
-                PERDER_INVULNERABILIDADE = pygame.USEREVENT + 0
-                pygame.time.set_timer(PERDER_INVULNERABILIDADE, 2000, 1)
                 if pizzas_possuidas > 0:
+                    jogador.invulnerabilidade = True
+                    jogador.transparencia(150)
+                    # pygame.USEREVENT + n, com n entre 0 e 8. Cria um evento. pygame.time.set_timer(evento, t, loops = 0) é uma função que coloca na fila de eventos o evento dado como argumento, que irá se repetir a cada t milissegundos um número de vezes igual ao número de loops(infinitas, se não der argumento ou for 0)
+                    PERDER_INVULNERABILIDADE = pygame.USEREVENT + 0
+                    pygame.time.set_timer(PERDER_INVULNERABILIDADE, 2000, 1)
                     pizzas_possuidas -= 1
                 else:
                     vidas -= 1
@@ -108,6 +108,7 @@ def colisoes(jogador, zumbis, pizzas, cocas, cracha, pizzas_possuidas, vidas):
 # Quando o jogador perde as 3 vidas(a ser debatido), ele regressa a posição inicial(consequência da colisão com zumbi), volta a ter 3 vidas e velocidade 10, os zumbis e coletáveis voltam a seus estados inicais.
 def reiniciar(jogador, zumbis, pizzas, cocas, cracha):
     jogador.invulnerabilidade = False
+    jogador.transparencia(255)
     Jogador.cor = BRANCO
     vidas = 3
     jogador.velocidade = 10
@@ -268,6 +269,7 @@ def rodar_jogo(Levels):
                     pygame.quit()
                 if evento.type == pygame.USEREVENT + 0:
                     jogador.invulnerabilidade = False
+                    jogador.transparencia(255)
                     Jogador.cor = BRANCO
                 if evento.type == pygame.USEREVENT + 1:
                     for zumbi in zumbis:

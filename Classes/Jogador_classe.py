@@ -13,10 +13,10 @@ class Jogador():
         self.tem_cracha = 0 
         self.saida = saida
         self.passou_de_fase = False
-        self.carrega_imagem = pygame.image.load(imagem)
-        self.imagem = pygame.transform.scale(self.carrega_imagem, (20, 20))
+        self.imagem = pygame.transform.scale(pygame.image.load(imagem).convert_alpha(), (20, 20))
 
-
+    def transparencia(self, alpha):
+        self.imagem.set_alpha(alpha)
 
     # Primeiramente, avalia qual a direção do movimento em x e em y. Então, chama um método que lida com o movimento unidirecional duas vezes: Uma apenas para x e uma apenas para y.
     def movimento(self, comandos, LARGURA, ALTURA):
