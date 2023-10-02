@@ -73,8 +73,6 @@ grid_1=[
 porta_1 = (19*32,1*32)
 jogador_coord_init_1 = (1*32, 13*32)  #x_inicial, y_inicial,
 jogador_1 = (jogador_coord_init_1, 10)  # coordenadas e velocidade
-
-#A ordem dos zumbis vão de cima p/ baixo no mapa 1 - o segundo é o zumbi no canto
 zumbis_1 = ((1*32, 1*32, True, False, 1, 1),
            (18*32,12*32, False, True, 1, 1),
            (32*6, 9*32, False, True, 1, -1),
@@ -198,7 +196,6 @@ pizzas_4 = [(192+8, 32+8),(320+8, 160+8),(128+8, 416+8)]
 cocas_4 = [(288+8, 288+8)]
 cracha_4 =  (480+8, 64+8)
 mapa_4 = (grid_4, porta_4, jogador_4, zumbis_4, pizzas_4, cocas_4, cracha_4, porta_imagem_padrao)
-# Zumbi(2*32, 13*32, 10, Paredes3, movimento_x=True,direcao_x = -1) #jogador_coord_init3 = [18*32, 4*32]
 
 
 grid_5=[
@@ -220,7 +217,6 @@ grid_5=[
 ]
 
 porta5 = (3*32,2*32)
-#grade_imagem = pygame.image.load('porta_marcelinho.avif')
 jogador_coord_init5 = [13*32, 4*32]  #x_inicial, y_inicial,
 jogador5 =(jogador_coord_init5, 10,)  # coordenadas e velocidade
 zumbis5 = [(6*32, 1*32,True,False,-1,1),
@@ -240,5 +236,5 @@ cocas5 = [(10*32+8, 11*32+8)]
 cracha5 = (8*32+8, 5*32+8)
 mapa_5 = (grid_5, porta5, jogador5, zumbis5, pizzas5, cocas5, cracha5, porta_marcelinho_imagem)
 
-
+#Conjunto de todos os mapas
 Levels = (mapa_1,mapa_2,mapa_3,mapa_4,mapa_5)

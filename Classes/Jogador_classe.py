@@ -1,8 +1,10 @@
 import pygame
+
 class Jogador():
     cor = (255, 255, 255)
 
     def __init__(self, coordenadas, velocidade, saida, Paredes, imagem, vidas=3):
+
         self.rect = pygame.Rect(*coordenadas, 18, 18)
         self.Paredes = Paredes
         self.x_inicial = coordenadas[0]
@@ -16,12 +18,15 @@ class Jogador():
         self.imagem = pygame.transform.scale(pygame.image.load(imagem).convert_alpha(), (20, 20))
 
     def transparencia(self, alpha):
+
         self.imagem.set_alpha(alpha)
 
-    # Primeiramente, avalia qual a direção do movimento em x e em y. Então, chama um método que lida com o movimento unidirecional duas vezes: Uma apenas para x e uma apenas para y.
+    #Primeiramente, avalia qual a direção do movimento em x e em y. Então, chama um método que lida com o movimento unidirecional duas vezes: Uma apenas para x e uma apenas para y.
     def movimento(self, comandos, LARGURA, ALTURA):
+
         self.deslocamento_x = 0
         self.deslocamento_y = 0
+
         if comandos[pygame.K_UP] and self.rect.y > 32:
             self.deslocamento_y = -self.velocidade
         if comandos[pygame.K_DOWN] and self.rect.y < ALTURA - 32:
@@ -36,7 +41,7 @@ class Jogador():
         if self.deslocamento_y != 0:
             self.movimento_linear(0, self.deslocamento_y)
 
-    # Método que move em apenas uma direção enquanto checa colisão com as paredes do mapa.
+    #Método que move em apenas uma direção enquanto checa colisão com as paredes do mapa.
     def movimento_linear(self, desloc_x, desloc_y):
         self.rect.x += desloc_x
         self.rect.y += desloc_y

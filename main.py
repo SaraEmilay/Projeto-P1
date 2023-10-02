@@ -265,13 +265,13 @@ def historia():
 def rodar_jogo(Levels):
 
     continuar = True
-    level_atual = 4
+    level_atual = 0
     vidas = 3
     pizzas_possuidas = 0
 
     while continuar: 
 
-        #Constróis de instâncias dos objetos
+        #Constrói as instâncias dos objetos
         nivel = gera_mapas(*Levels[level_atual])
         paredes = nivel[0]
         porta = nivel[1]
@@ -397,7 +397,7 @@ def rodar_jogo(Levels):
             pygame.display.update()
 
 jogo_rodando = True
-
+#Navega pelos menus do jogo
 while jogo_rodando:
 
     for evento in pygame.event.get():
@@ -405,7 +405,7 @@ while jogo_rodando:
             pygame.quit()
             sys.exit()
     
-    JANELA.fill(PRETO)  # Limpa a tela
+    JANELA.fill(PRETO) #Limpa a tela
     if configuracao["Menu inicial"]==True:
         menu_inicial()
     elif configuracao["Creditos"]==True:
