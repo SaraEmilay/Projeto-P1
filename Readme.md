@@ -29,6 +29,14 @@ Para execução do código, é necessário que você possua Python e Pygame inst
 
 O movimento do jogador é controlado através das setas: esquerda, direita, para cima e para baixo. O objetivo do jogador é libertar Marcelinho de sua prisão, para isso ele deve passar pelos labirintos sem colidir com os zumbis, coletar pizzas, para ganhar invulnerabilidade aos danos, e crachás para conseguir passar de fase.
 
+### Efeitos das Colisões:
+- Pizza: Aumenta o número de pizzas em um. Pizzas conferem invulnerabilidade ao próximo dano sofrido por contato com zumbis, evitando ter que recomeçar o nível atual.
+- Zumbi: Se possuir pizzas, diminui seu número em um e confere breve invulnerabilidade ao jogador, para que este saia do perigo. Se não possuir, remove uma das vidas do jogador(potencialmente levando-o a perder o jogo) e o transporta para a posição inicial do nível atual.
+- Coca-café: Aguça os sentidos e velocidade do jogador, fazendo ele perceber os zumbis mais lentamente do que eles realmente são, o que na prática reduz a velocidade dos zumbis pela metade pelos próximos segundos.
+- Crachá: Aumenta em 1 o número de crachás(só há um por sala). Permite que o jogador passe pela porta.
+- Paredes: Impedem movimento
+- Porta: Se não possuir crachá, se comporta como parede. Se possuir, consome um crachá para levar o jogador para a próxima fase.
+
 ## Organização do código
 
 /imagens
