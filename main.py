@@ -387,8 +387,8 @@ def rodar_jogo(Levels):
                     configuracao["Fim do jogo"]=True
                     pygame.quit()
 
-                botao_menu = pygame.transform.scale(pygame.image.load("./imagens/telas/menu_inicial_botao.png"), (180, 160))
-                JANELA.blit(botao_menu, (100, 180))   
+                botao_menu = pygame.transform.scale(pygame.image.load("./imagens/telas/jogar_de_novo_botao.png"), (180, 170))
+                JANELA.blit(botao_menu, (100, 170))   
 
                 botao_encerrar = pygame.transform.scale(pygame.image.load("./imagens/telas/fechar_jogo_botao.png"), (180, 160))
                 JANELA.blit(botao_encerrar, (360, 180)) 

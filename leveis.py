@@ -16,7 +16,7 @@ def gera_mapas(grid, porta_arg, jogador_arg, zumbis_arg, pizzas_arg, cocas_arg, 
 
     paredes = cria_paredes(grid)
     porta = Porta(*porta_arg, porta_imagem)
-    jogador = Jogador(*jogador_arg, porta, paredes, './imagens/personagens/player.png')
+    jogador = Jogador(*jogador_arg, porta, paredes)
     zumbis = []
 
     for zumbi_arg in zumbis_arg:

@@ -3,7 +3,7 @@ import pygame
 class Jogador():
     cor = (255, 255, 255)
 
-    def __init__(self, coordenadas, velocidade, saida, Paredes, imagem, vidas=3):
+    def __init__(self, coordenadas, velocidade, saida, Paredes, vidas=3):
 
         self.rect = pygame.Rect(*coordenadas, 18, 18)
         self.Paredes = Paredes
@@ -15,11 +15,14 @@ class Jogador():
         self.tem_cracha = 0 
         self.saida = saida
         self.passou_de_fase = False
-        self.imagem = pygame.transform.scale(pygame.image.load(imagem).convert_alpha(), (20, 20))
+        self.imagem_direita = pygame.transform.scale(pygame.image.load('./imagens/personagens/player_direito.png').convert_alpha(), (20, 20))
+        self.imagem_esquerda = pygame.transform.scale(pygame.image.load('./imagens/personagens/player_esquerdo.png').convert_alpha(), (20, 20))
+        self.imagem = self.imagem_direita
 
     def transparencia(self, alpha):
-
         self.imagem.set_alpha(alpha)
+        self.imagem_esquerda.set_alpha(alpha)
+        self.imagem_direita.set_alpha(alpha)
 
     #Primeiramente, avalia qual a direção do movimento em x e em y. Então, chama um método que lida com o movimento unidirecional duas vezes: Uma apenas para x e uma apenas para y.
     def movimento(self, comandos, LARGURA, ALTURA):
@@ -33,8 +36,10 @@ class Jogador():
             self.deslocamento_y = self.velocidade
         if comandos[pygame.K_RIGHT] and self.rect.x < LARGURA - 32:
             self.deslocamento_x = self.velocidade
+            self.imagem = self.imagem_direita
         if comandos[pygame.K_LEFT] and self.rect.x > 32:
             self.deslocamento_x = -self.velocidade
+            self.imagem = self.imagem_esquerda
 
         if self.deslocamento_x != 0:
             self.movimento_linear(self.deslocamento_x, 0)
