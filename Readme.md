@@ -64,7 +64,7 @@ Na implementação básica do jogo, aplicamos, assim como visto em sala, princí
 
 Para estruturar os mapas do jogo, empregamos conceitos de listas para criar matrizes que representam a disposição das paredes. Essas listas são essenciais para criar uma estrutura organizada que define os obstáculos e os caminhos disponíveis no jogo. Além disso, utilizamos parâmetros para armazenar as coordenadas dos objetos, como coletáveis, inimigos e jogador, permitindo que o jogo os posicione corretamente no mapa.
 
-Na criação dos objetos do jogo, aplicamos a programação orientada a objetos (POO) utilizando classes para definir as características e comportamentos dos objetos. Cada classe representa um tipo específico de objeto no jogo, os atributos dessas classes representam as propriedades dos objetos, enquanto os métodos definem as ações que esses objetos devem ou podem realizar.
+Na criação dos objetos do jogo, aplicamos a programação orientada a objetos (POO) utilizando classes para definir as características e comportamentos dos objetos. Cada classe representa um tipo específico de objeto no jogo, os atributos dessas classes representam as propriedades dos objetos, enquanto os métodos definem as ações que esses objetos devem ou podem realizar. Os conceitos de função foram utilizados para implementar os métodos das classes. 
 
 ## Os desafios, erros e lições aprendidas no decorrer do projeto.
 
