@@ -1,5 +1,12 @@
-from classes import*
-
+#from classes import*
+from Classes.Cracha_classe import Cracha
+from Classes.Parede_classe import Parede
+from Classes.Porta_classe import Porta
+from Classes.Coca_cafe_classe import Coca_cafe
+from Classes.Jogador_classe import Jogador
+from Classes.Pizzas_classe import Pizza
+from Classes.Marcelinho_classe import Marcelinho
+from Classes.Zumbi_classe import Zumbi
 
 
 def gera_mapas(grid, porta_arg, jogador_arg, zumbis_arg, pizzas_arg, cocas_arg, cracha_arg, porta_imagem):

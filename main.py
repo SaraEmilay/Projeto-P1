@@ -1,8 +1,15 @@
 import pygame
-import random
-from classes import*
+#from classes import *
 from leveis import Levels, gera_mapas
-from os import path
+from Classes.Botão_classe import Botao
+from Classes.Cracha_classe import Cracha
+from Classes.Parede_classe import Parede
+from Classes.Porta_classe import Porta
+from Classes.Coca_cafe_classe import Coca_cafe
+from Classes.Jogador_classe import Jogador
+from Classes.Pizzas_classe import Pizza
+from Classes.Marcelinho_classe import Marcelinho
+from Classes.Zumbi_classe import Zumbi
 
 
 Levels = Levels
