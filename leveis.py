@@ -13,33 +13,43 @@ porta_imagem_padrao = './imagens/porta.jpg'
 porta_marcelinho_imagem = './imagens/porta_marcelinho.jpg'
 
 def gera_mapas(grid, porta_arg, jogador_arg, zumbis_arg, pizzas_arg, cocas_arg, cracha_arg, porta_imagem):
+
     paredes = cria_paredes(grid)
     porta = Porta(*porta_arg, porta_imagem)
     jogador = Jogador(*jogador_arg, porta, paredes, './imagens/player.png')
     zumbis = []
+
     for zumbi_arg in zumbis_arg:
         zumbis.append(Zumbi(*zumbi_arg, paredes,'./imagens/zumbi.png',"./imagens/tras_personagem.png","./imagens/frente_personagem.png",porta))
     pizzas = []
+    
     for pizza_arg in pizzas_arg:
         pizzas.append(Pizza(*pizza_arg, './imagens/pizza.png'))
     cocas = []
+    
     if len(cocas_arg) > 0:
         for coca_arg in cocas_arg:
             cocas.append(Coca_cafe(*coca_arg, './imagens/coca.png'))
     cracha = Cracha(*cracha_arg, './imagens/cracha.png')
+    
     return (paredes, porta, jogador, zumbis, pizzas, cocas, cracha)
+
 def cria_paredes(grid):
+        
         paredes = []
         x=y=0
+        
         for linha in grid:
+            
             for coluna in linha:
+                
                 if coluna =='P':
                     paredes.append(Parede((x,y), './imagens/parede.jpg'))
                 x+=32
             y+=32
             x=0
+        
         return paredes
-
 
 grid_1=[
     'PPPPPPPPPPPPPPPPPPPP',
@@ -64,7 +74,7 @@ porta_1 = (19*32,1*32)
 jogador_coord_init_1 = (1*32, 13*32)  #x_inicial, y_inicial,
 jogador_1 = (jogador_coord_init_1, 10)  # coordenadas e velocidade
 
-#A ordem dos zumbis vão de cima p/ baixo no mapa 1 - o Segundo é o zumbi no canto
+#A ordem dos zumbis vão de cima p/ baixo no mapa 1 - o segundo é o zumbi no canto
 zumbis_1 = ((1*32, 1*32, True, False, 1, 1),
            (18*32,12*32, False, True, 1, 1),
            (32*6, 9*32, False, True, 1, -1),
